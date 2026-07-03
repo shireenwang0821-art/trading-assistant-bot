@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>做T交易助手</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<style>
+/* ========== 全局重置与变量 ========== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#2F5496;--primary-light:#3a6bc5;--primary-dark:#1e3a6e;
+  --profit:#C00000;--loss:#548235;
+  --buy-bg:#C00000;--sell-bg:#548235;
+  --bg:#f0f2f5;--card-bg:#fff;
+  --text:#1a1a1a;--text2:#666;--border:#e0e0e0;
+  --shadow:0 2px 8px rgba(0,0,0,.08);--radius:8px;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;
+  padding-bottom:60px;-webkit-tap-highlight-color:transparent;
+}
+/* ========== 顶栏 ========== */
+.header{
+  background:var(--primary);color:#fff;padding:14px 16px;font-size:18px;font-weight:600;
+  position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;
+}
+.header .back-btn{
+  position:absolute;left:12px;background:none;border:none;color:#fff;font-size:24px;
+  cursor:pointer;padding:4px 8px;display:none;
+}
+/* ========== 底部Tab ========== */
+.tab-bar{
+  position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;
+  border-top:1px solid var(--border);z-index:100;padding-bottom:env(safe-area-inset-bottom);
+}
+.tab-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;
+  cursor:pointer;color:var(--text2);font-size:11px;transition:color .2s;
+  border:none;background:none;-webkit-tap-highlight-color:transparent;
+}
+.tab-item.active{color:var(--primary)}
+.tab-item .tab-icon{font-size:22px;margin-bottom:2px}
+/* ========== 页面 ========== */
+.page{display:none;padding:12px;max-width:600px;margin:0 auto}
+.page.active{display:block}
+/* ========== 卡片 ========== */
+.card{
+  background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:14px;margin-bottom:10px;cursor:pointer;transition:transform .15s;position:relative;
+}
+.card:active{transform:scale(.98)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.card-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px;color:var(--text2)}
+.card-info .val{color:var(--text);font-weight:500}
+.profit{color:var(--profit)}.loss{color:var(--loss)}
+/* ========== 按钮 ========== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border:none;
+  border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:active{opacity:.7}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-danger{background:var(--profit);color:#fff}
+.btn-success{background:var(--sell-bg);color:#fff}
+.btn-outline{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+.btn-block{width:100%}.btn-sm{padding:6px 12px;font-size:13px}
+.fab{
+  position:fixed;bottom:76px;right:20px;width:52px;height:52px;border-radius:50%;
+  background:var(--primary);color:#fff;font-size:28px;border:none;
+  box-shadow:0 4px 12px rgba(47,84,150,.4);cursor:pointer;z-index:50;
+  display:flex;align-items:center;justify-content:center;
+}
+.fab:active{opacity:.7}
+/* ========== 模态框 ========== */
+.modal-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;
+}
+.modal-overlay.show{display:flex}
+.modal{
+  background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:500px;
+  max-height:85vh;overflow-y:auto;padding:20px 16px;animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-title{font-size:17px;font-weight:600;margin-bottom:16px;text-align:center;position:relative}
+.modal-close{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;
+  font-size:22px;cursor:pointer;color:var(--text2);padding:4px 8px;
+}
+/* ========== 表单 ========== */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;
+  font-size:15px;outline:none;transition:border-color .2s;font-family:inherit;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--primary)}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-row{display:flex;gap:10px}.form-row .form-group{flex:1}
+/* ========== 交易列表 ========== */
+.trade-item{
+  display:flex;align-items:center;padding:10px 14px;background:#fff;border-radius:var(--radius);
+  margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.trade-tag{
+  display:inline-block;padding:2px 8px;border-radius:4px;color:#fff;font-size:12px;
+  font-weight:500;margin-right:10px;min-width:36px;text-align:center;
+}
+.trade-tag.buy{background:var(--buy-bg)}.trade-tag.sell{background:var(--sell-bg)}
+.trade-detail{flex:1}.trade-price{font-weight:600;font-size:15px}
+.trade-shares{color:var(--text2);font-size:13px}
+.trade-time{color:var(--text2);font-size:12px;text-align:right}
+.trade-del{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;padding:4px 8px;margin-left:4px}
+.trade-del:active{color:var(--profit)}
+/* ========== 表格 ========== */
+.data-table{
+  width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;
+  background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+}
+.data-table th{background:var(--primary);color:#fff;padding:8px 6px;text-align:center;font-weight:500;white-space:nowrap}
+.data-table td{padding:8px 6px;text-align:center;border-bottom:1px solid #f0f0f0}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:nth-child(even) td{background:#f9f9fb}
+/* ========== 统计 ========== */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.stat-box{background:#fff;border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat-box .stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+.stat-box .stat-value{font-size:20px;font-weight:700}
+/* ========== 选择器 ========== */
+.stock-selector{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;background:#fff;margin-bottom:12px;outline:none}
+/* ========== Toast ========== */
+.toast{
+  position:fixed;top:60px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);
+  color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;z-index:999;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.toast.show{opacity:1}
+/* ========== 空状态 ========== */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text2)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:14px}
+/* ========== 详情子页面 ========== */
+.sub-page{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:90;overflow-y:auto;padding-bottom:60px}
+.sub-page.show{display:block}
+/* ========== 分隔标题 ========== */
+.section-title{font-size:14px;font-weight:600;color:var(--primary);margin:16px 0 8px;padding-left:4px}
+/* ========== 预览列表 ========== */
+.preview-list{max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:6px;margin:10px 0}
+.preview-item{display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:13px}
+.preview-item:last-child{border-bottom:none}
+/* ========== OCR ========== */
+.ocr-area{
+  border:2px dashed var(--border);border-radius:var(--radius);padding:30px;text-align:center;
+  color:var(--text2);cursor:pointer;margin:10px 0;transition:all .2s;
+}
+.ocr-area:active{border-color:var(--primary)}
+.ocr-area.dragover{border-color:var(--primary);background:rgba(47,84,150,.05);transform:scale(1.02)}
+.ocr-area.dragover .ocr-icon{transform:scale(1.2)}
+.ocr-icon{transition:transform .2s}
+.ocr-hint{font-size:11px;color:#999;margin-top:8px;line-height:1.4}
+.ocr-progress{display:none;margin:10px 0}
+.ocr-progress .pbar{height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+.ocr-progress .pfill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.ocr-progress .ptxt{font-size:12px;color:var(--text2);margin-top:4px;text-align:center}
+/* ========== 按钮组 ========== */
+.btn-group{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.btn-group .btn{flex:1;min-width:100px}
+/* ========== 层级标签 ========== */
+.layer-tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:500}
+.layer-tag.base{background:#e8f0fe;color:var(--primary)}
+.layer-tag.t{background:#fff3e0;color:#e67e22}
+/* ========== 数据管理 ========== */
+.data-info{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.data-info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:14px}
+.data-info-row:last-child{border-bottom:none}
+.data-info-row .lbl{color:var(--text2)}.data-info-row .vl{font-weight:500}
+/* ========== 响应式 ========== */
+@media(min-width:600px){
+  .modal{border-radius:16px;margin-bottom:20px}
+  .modal-overlay{align-items:center}
+  .page{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- 顶栏 -->
+<div class="header" id="header">
+  <button class="back-btn" id="backBtn" onclick="goBack()">‹</button>
+  <span id="headerTitle">做T交易助手</span>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ====== Tab1: 持仓总览 ====== -->
+<div class="page active" id="page-portfolio">
+  <div id="stockList"></div>
+  <div class="empty-state" id="emptyPortfolio" style="display:none">
+    <div class="empty-icon">📊</div><p>暂无持仓，点击右下角 + 添加股票</p>
+  </div>
+  <button class="fab" onclick="showAddStockModal()">+</button>
+</div>
+
+<!-- ====== Tab2: 交易记录 ====== -->
+<div class="page" id="page-trades">
+  <select class="stock-selector" id="tradeStockSelect" onchange="onTradeStockChange()">
+    <option value="">请选择股票</option>
+  </select>
+  <div id="tradeListContainer"></div>
+  <div class="btn-group" id="tradeBtnGroup" style="display:none">
+    <button class="btn btn-primary" onclick="showManualTradeModal()">📝 手动录入</button>
+    <button class="btn btn-outline" onclick="showBatchImportModal()">📋 批量导入</button>
+    <button class="btn btn-outline" onclick="showOcrModal()">📷 截图识别</button>
+  </div>
+</div>
+
+<!-- ====== Tab3: 做T分析 ====== -->
+<div class="page" id="page-analysis">
+  <select class="stock-selector" id="analysisStockSelect" onchange="renderAnalysis()">
+    <option value="">请选择股票</option>
+  </select>
+  <div id="analysisContainer"></div>
+</div>
+
+<!-- ====== Tab4: 数据管理 ====== -->
+<div class="page" id="page-data">
+  <div class="section-title">数据概览</div>
+  <div class="data-info" id="dataInfo"></div>
+  <div class="section-title">Coze同步</div>
+  <div style="background:#f0f7ff;border-radius:8px;padding:12px;margin-bottom:12px">
+    <p style="font-size:12px;color:#666;margin-bottom:8px">双向同步：从Coze同步到工具，或从工具同步到Coze。</p>
+    <button class="btn btn-primary btn-block" onclick="syncToCoze()" style="width:100%">📋 复制持仓数据同步到Coze</button>
+    <button class="btn btn-outline btn-block" onclick="showPasteSyncModal()" style="width:100%;margin-top:8px">📥 从Coze粘贴数据同步到工具</button>
+    <div id="syncResult" style="display:none;margin-top:8px"></div>
+  </div>
+  <div class="section-title">数据操作</div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <button class="btn btn-primary btn-block" onclick="exportData()">📤 导出全部数据（JSON）</button>
+    <button class="btn btn-outline btn-block" onclick="document.getElementById('importFile').click()">📥 导入JSON数据文件</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn btn-danger btn-block" onclick="clearAllData()">🗑️ 清除所有数据</button>
+  </div>
+</div>
+
+<!-- ====== 股票详情子页面 ====== -->
+<div class="sub-page" id="stockDetail">
+  <div class="header">
+    <button class="back-btn" style="display:block" onclick="closeStockDetail()">‹</button>
+    <span id="detailTitle">股票详情</span>
+  </div>
+  <div style="padding:12px;max-width:600px;margin:0 auto" id="detailContent"></div>
+</div>
+
+<!-- ====== 底部Tab ====== -->
+<div class="tab-bar">
+  <button class="tab-item active" onclick="switchTab('portfolio',this)">
+    <span class="tab-icon">📊</span>持仓
+  </button>
+  <button class="tab-item" onclick="switchTab('trades',this)">
+    <span class="tab-icon">📝</span>交易
+  </button>
+  <button class="tab-item" onclick="switchTab('analysis',this)">
+    <span class="tab-icon">📈</span>做T
+  </button>
+  <button class="tab-item" onclick="switchTab('data',this)">
+    <span class="tab-icon">💾</span>数据
+  </button>
+</div>
+
+<!-- ====== 模态框 ====== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+</div>
+
+<script>
+/* ==============================================================
+   全局数据与工具
+   ============================================================== */
+const STORAGE_KEY = 'trading_assistant_data';
+const CLOUD_SYNC_DATA = {"version": 1,"lastModified": "2026-07-03T16:21:00","stocks": {},"syncSource": "coze_agent"};
+let appData = { version:1, lastModified:'', stocks:{} };
+// 跟踪当前操作的股票ID（用于批量导入/OCR确认时回写）
+let _actionStockId = '';
+
+function uuid(){return 'xxxx-xxxx'.replace(/x/g,()=>((Math.random()*16)|0).toString(16))}
+function loadData(){
+  try{const r=localStorage.getItem(STORAGE_KEY);if(r){appData=JSON.parse(r);if(!appData.stocks)appData.stocks={}}}
+  catch(e){console.error('加载数据失败',e)}
+  // 自动从Coze同步最新持仓
+  cloudSync();
+}
+function saveData(){
+  appData.lastModified=new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));
+  showToast('数据已自动保存');
+}
+
+function cloudSync(){
+  if(typeof CLOUD_SYNC_DATA === 'undefined') return;
+  const cloud = CLOUD_SYNC_DATA;
+  const local = appData;
+  const cloudTime = new Date(cloud.lastModified).getTime();
+  const localTime = local.lastModified ? new Date(local.lastModified).getTime() : 0;
+  
+  if(cloudTime > localTime){
+    // 云端数据更新，自动同步
+    // 如果云端stocks为空且本地有数据，执行全量清空（远程重置指令）
+    if(Object.keys(cloud.stocks).length === 0 && local.stocks && Object.keys(local.stocks).length > 0){
+      appData = { version: cloud.version, lastModified: cloud.lastModified, stocks: {} };
+      saveData();
+      showToast('✅ 已清空全部数据，等待重新同步');
+      return;
+    }
+    // 保留本地独有的stocks（云端没有的）
+    const merged = JSON.parse(JSON.stringify(cloud));
+    if(local.stocks){
+      for(const sid in local.stocks){
+        if(!merged.stocks[sid]){
+          merged.stocks[sid] = local.stocks[sid]; // 保留本地独有的
+        } else {
+          // 合并trades：云端+本地去重
+          const cloudTradeIds = new Set(merged.stocks[sid].trades.map(t=>t.id));
+          for(const lt of local.stocks[sid].trades){
+            if(!cloudTradeIds.has(lt.id)){
+              merged.stocks[sid].trades.push(lt);
+            }
+          }
+          // baseShares取本地设置（用户手动设的优先）
+          if(local.stocks[sid].baseShares && local.stocks[sid].baseShares > 0){
+            merged.stocks[sid].baseShares = local.stocks[sid].baseShares;
+          }
+        }
+      }
+    }
+    appData = merged;
+    saveData();
+    showToast('✅ 已从Coze同步最新持仓');
+  }
+}
+
+function showToast(msg,ms){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),ms||1500);
+}
+function fmtNum(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function fmtPrice(p){return Number(p).toFixed(3).replace(/0$/,'')}
+function fmtDate(iso){const d=new Date(iso);return `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function fmtDateFull(iso){const d=new Date(iso);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function round2(n){return Math.round(n*100)/100}
+
+/* ==============================================================
+   Tab 切换
+   ============================================================== */
+function switchTab(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el)el.classList.add('active');
+  if(name==='portfolio')renderPortfolio();
+  if(name==='trades'){updateStockSelectors();renderTradeList()}
+  if(name==='analysis'){updateStockSelectors();renderAnalysis()}
+  if(name==='data')renderDataInfo();
+}
+
+/* ==============================================================
+   持仓总览
+   ============================================================== */
+function calcStockStats(s){
+  const trades=s.trades||[];
+  let buyShares=0,buyCost=0,sellShares=0,sellIncome=0,todayBuy=0,todaySell=0;
+  const today=new Date().toDateString();
+  trades.forEach(t=>{
+    if(t.type==='buy'){buyShares+=t.shares;buyCost+=t.price*t.shares}
+    else{sellShares+=t.shares;sellIncome+=t.price*t.shares}
+    if(new Date(t.datetime).toDateString()===today){
+      if(t.type==='buy')todayBuy+=t.price*t.shares;
+      else todaySell+=t.price*t.shares;
+    }
+  });
+  // 今日盈亏 = 今日卖出收入 - 对应买入成本（简化：卖出均价 vs 总均价）
+  const avgPrice=buyShares>0?buyCost/buyShares:0;
+  const todayPnl=todaySell - (avgPrice>0 && todaySell>0 ? (todaySell/avgPrice>0 ? 0 : 0) : 0);
+  // 更准确的今日盈亏：今日卖出的加权盈利
+  let pnl=0;
+  if(todaySell>0 && avgPrice>0){
+    // 简化计算：今日卖出金额 - 今日卖出股数*均价
+    const todaySellShares = trades.filter(t=>t.type==='sell'&&new Date(t.datetime).toDateString()===today).reduce((s,t)=>s+t.shares,0);
+    pnl = todaySell - todaySellShares * avgPrice;
+  }
+  return{netShares:buyShares-sellShares,avgPrice,buyShares,sellShares,buyCost,sellIncome,todayPnl:pnl};
+}
+
+function renderPortfolio(){
+  const stocks=Object.values(appData.stocks);
+  const c=document.getElementById('stockList'),empty=document.getElementById('emptyPortfolio');
+  if(!stocks.length){c.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+  c.innerHTML=stocks.map(s=>{
+    const st=calcStockStats(s);
+    const cls=st.todayPnl>=0?'profit':'loss';
+    const sign=st.todayPnl>=0?'+':'';
+    return `<div class="card" onclick="openStockDetail('${s.id}')">
+      <div class="card-title">
+        <span>${s.name} <small style="color:#999;font-weight:400">${s.code}</small></span>
+        <span class="${cls}" style="font-size:14px">${st.todayPnl!==0?sign+st.todayPnl.toFixed(2):'--'}</span>
+      </div>
+      <div class="card-info">
+        <div>净持仓<br><span class="val">${fmtNum(st.netShares)}股</span></div>
+        <div>均价<br><span class="val">${st.avgPrice>0?fmtPrice(st.avgPrice):'--'}</span></div>
+        <div>底仓<br><span class="val">${fmtNum(s.baseShares||0)}股</span></div>
+        <div>交易笔数<br><span class="val">${s.trades.length}笔</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ==============================================================
+   股票详情
+   ============================================================== */
+let _detailStockId='';
+function openStockDetail(stockId){
+  const s=appData.stocks[stockId];if(!s)return;
+  _detailStockId=stockId;
+  document.getElementById('detailTitle').textContent=s.name+' '+s.code;
+  document.getElementById('backBtn').style.display='block';
+  document.getElementById('stockDetail').classList.add('show');
+  renderStockDetail(stockId);
+}
+function closeStockDetail(){
+  document.getElementById('stockDetail').classList.remove('show');
+  document.getElementById('backBtn').style.display='none';
+  _detailStockId='';
+  renderPortfolio();
+}
+
+function renderStockDetail(stockId){
+  const s=appData.stocks[stockId];if(!s)return;
+  const st=calcStockStats(s);
+  const trades=[...s.trades].sort((a,b)=>new Date(b.datetime)-new Date(a.datetime));
+  let h=`
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">净持仓</div><div class="stat-value">${fmtNum(st.netShares)}</div></div>
+      <div class="stat-box"><div class="stat-label">持仓均价</div><div class="stat-value">${st.avgPrice>0?fmtPrice(st.avgPrice):'--'}</div></div>
+      <div class="stat-box"><div class="stat-label">累计买入</div><div class="stat-value">${fmtNum(st.buyShares)}</div></div>
+      <div class="stat-box"><div class="stat-label">累计卖出</div><div class="stat-value">${fmtNum(st.sellShares)}</div></div>
+    </div>
+    <div style="display:flex;gap:8px;margin:12px 0">
+      <button class="btn btn-outline btn-sm" onclick="showEditBaseShares('${stockId}')">⚙️ 设置底仓</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDeleteStock('${stockId}')">🗑️ 删除股票</button>
+    </div>
+    <div class="section-title">交易记录（${trades.length}笔）</div>`;
+  if(!trades.length) h+='<div class="empty-state"><p>暂无交易记录</p></div>';
+  else{
+    h+='<div style="margin-top:8px">';
+    trades.forEach(t=>{
+      const tag=t.type==='buy'?'<span class="trade-tag buy">买</span>':'<span class="trade-tag sell">卖</span>';
+      h+=`<div class="trade-item">
+        ${tag}<div class="trade-detail"><div class="trade-price">${fmtPrice(t.price)}</div><div class="trade-shares">${fmtNum(t.shares)}股</div></div>
+        <div class="trade-time">${fmtDateFull(t.datetime)}</div>
+        <button class="trade-del" onclick="deleteTrade('${stockId}','${t.id}')">×</button>
+      </div>`;
+    });
+    h+='</div>';
+  }
+  h+=`<div class="btn-group" style="margin-top:16px">
+    <button class="btn btn-primary" onclick="showManualTradeModalForStock('${stockId}')">📝 手动录入</button>
+    <button class="btn btn-outline" onclick="showBatchImportModalForStock('${stockId}')">📋 批量导入</button>
+    <button class="btn btn-outline" onclick="showOcrModalForStock('${stockId}')">📷 截图识别</button>
+  </div>`;
+  document.getElementById('detailContent').innerHTML=h;
+}
+
+function deleteTrade(stockId,tradeId){
+  if(!confirm('确认删除这笔交易？'))return;
+  appData.stocks[stockId].trades=appData.stocks[stockId].trades.filter(t=>t.id!==tradeId);
+  saveData();
+  renderStockDetail(stockId);
+}
+function showEditBaseShares(stockId){
+  const s=appData.stocks[stockId];if(!s)return;
+  showModal(`
+    <div class="modal-title">设置底仓<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <div class="form-group"><label>${s.name}（${s.code}）底仓股数</label>
+    <input id="editBaseVal" type="number" value="${s.baseShares||0}" min="0"></div>
+    <button class="btn btn-primary btn-block" onclick="saveBaseShares('${stockId}')">保存</button>
+  `);
+}
+function saveBaseShares(stockId){
+  appData.stocks[stockId].baseShares=parseInt(document.getElementById('editBaseVal').value)||0;
+  saveData();forceCloseModal();renderStockDetail(stockId);showToast('底仓已更新');
+}
+function confirmDeleteStock(stockId){
+  const s=appData.stocks[stockId];if(!s)return;
+  if(confirm(`确认删除 ${s.name}（${s.code}）？所有交易记录将被永久删除！`)){
+    delete appData.stocks[stockId];saveData();closeStockDetail();renderPortfolio();updateStockSelectors();showToast('已删除');
+  }
+}
+
+/* ==============================================================
+   交易记录页
+   ============================================================== */
+function updateStockSelectors(){
+  const stocks=Object.values(appData.stocks);
+  const opts=stocks.map(s=>`<option value="${s.id}">${s.name} (${s.code})</option>`).join('');
+  const ph='<option value="">请选择股票</option>';
+  const ts=document.getElementById('tradeStockSelect');
+  const as=document.getElementById('analysisStockSelect');
+  const prevTrade=ts.value, prevAnalysis=as.value;
+  ts.innerHTML=ph+opts;
+  as.innerHTML=ph+opts;
+  // 保持之前的选择
+  if(prevTrade&&appData.stocks[prevTrade])ts.value=prevTrade;
+  if(prevAnalysis&&appData.stocks[prevAnalysis])as.value=prevAnalysis;
+}
+
+function onTradeStockChange(){renderTradeList()}
+
+function renderTradeList(){
+  const stockId=document.getElementById('tradeStockSelect').value;
+  const c=document.getElementById('tradeListContainer');
+  const bg=document.getElementById('tradeBtnGroup');
+  if(!stockId){
+    c.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>请先选择股票</p></div>';
+    bg.style.display='none';return;
+  }
+  bg.style.display='flex';
+  const s=appData.stocks[stockId];if(!s)return;
+  const trades=[...s.trades].sort((a,b)=>new Date(b.datetime)-new Date(a.datetime));
+  if(!trades.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>暂无交易记录，点击下方按钮录入</p></div>';return}
+  let h='<div style="margin-top:8px">';
+  trades.forEach(t=>{
+    const tag=t.type==='buy'?'<span class="trade-tag buy">买</span>':'<span class="trade-tag sell">卖</span>';
+    h+=`<div class="trade-item">
+      ${tag}<div class="trade-detail"><div class="trade-price">${fmtPrice(t.price)}</div><div class="trade-shares">${fmtNum(t.shares)}股</div></div>
+      <div class="trade-time">${fmtDateFull(t.datetime)}</div>
+      <button class="trade-del" onclick="deleteTrade('${stockId}','${t.id}');renderTradeList()">×</button>
+    </div>`;
+  });
+  h+='</div>';c.innerHTML=h;
+}
+
+/* ==============================================================
+   做T配对算法
+   ============================================================== */
+function calcTMatching(stock){
+  const trades=stock.trades||[];
+  // 1. 汇总同价买卖
+  const buyMap={},sellMap={};
+  trades.forEach(t=>{
+    const k=t.price.toFixed(3);
+    if(t.type==='buy')buyMap[k]=(buyMap[k]||0)+t.shares;
+    else sellMap[k]=(sellMap[k]||0)+t.shares;
+  });
+  // 2. 买入升序、卖出降序
+  const buys=Object.entries(buyMap).map(([p,sh])=>({price:parseFloat(p),shares:sh,rem:sh})).sort((a,b)=>a.price-b.price);
+  const sells=Object.entries(sellMap).map(([p,sh])=>({price:parseFloat(p),shares:sh,rem:sh})).sort((a,b)=>b.price-a.price);
+  // 3. 贪婪匹配
+  const pairs=[];
+  let bi=0,si=0;
+  while(bi<buys.length&&si<sells.length){
+    const buy=buys[bi],sell=sells[si];
+    const target=round2(buy.price*1.02);
+    if(sell.price>=target){
+      const m=Math.min(buy.rem,sell.rem);
+      const profit=round2((sell.price-buy.price)*m);
+      const rate=round2((sell.price-buy.price)/buy.price*100);
+      pairs.push({buyPrice:buy.price,sellPrice:sell.price,targetPrice:target,shares:m,profit,profitRate:rate});
+      buy.rem-=m;sell.rem-=m;
+      if(buy.rem===0)bi++;if(sell.rem===0)si++;
+    }else break;
+  }
+  // 4. 未匹配买入 = 当前持仓
+  const unmatchedBuys=[];
+  for(let i=0;i<buys.length;i++)if(buys[i].rem>0)unmatchedBuys.push({price:buys[i].price,shares:buys[i].rem});
+  unmatchedBuys.sort((a,b)=>a.price-b.price);
+  // 5. 未匹配卖出 = 待回补
+  const unmatchedSells=[];
+  for(let i=0;i<sells.length;i++)if(sells[i].rem>0)unmatchedSells.push({price:sells[i].price,shares:sells[i].rem});
+  unmatchedSells.sort((a,b)=>b.price-a.price);
+  // 6. 底仓/T仓分层
+  const baseShares=stock.baseShares||0;
+  const baseLayers=[],tLayers=[];
+  let baseRemain=baseShares;
+  for(const ub of unmatchedBuys){
+    if(baseRemain<=0)break;
+    const take=Math.min(baseRemain,ub.shares);
+    baseLayers.push({price:ub.price,shares:take});baseRemain-=take;
+  }
+  let tTotal=unmatchedBuys.reduce((s,u)=>s+u.shares,0)-baseShares;
+  if(tTotal<0)tTotal=0;
+  let tRemain=tTotal,baseConsumed=baseShares;
+  for(const ub of unmatchedBuys){
+    const afterBase=Math.max(0,ub.shares-Math.max(0,baseConsumed));
+    baseConsumed=Math.max(0,baseConsumed-ub.shares);
+    if(afterBase>0&&tRemain>0){const take=Math.min(afterBase,tRemain);tLayers.push({price:ub.price,shares:take});tRemain-=take}
+  }
+  return{pairs,unmatchedBuys,unmatchedSells,baseLayers,tLayers,totalHolding:unmatchedBuys.reduce((s,u)=>s+u.shares,0)};
+}
+
+/* ==============================================================
+   做T分析页
+   ============================================================== */
+function renderAnalysis(){
+  const stockId=document.getElementById('analysisStockSelect').value;
+  const c=document.getElementById('analysisContainer');
+  if(!stockId){c.innerHTML='<div class="empty-state"><div class="empty-icon">📈</div><p>请先选择股票</p></div>';return}
+  const s=appData.stocks[stockId];
+  if(!s||!s.trades.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📈</div><p>该股票暂无交易记录</p></div>';return}
+  const r=calcTMatching(s);
+  const totalProfit=r.pairs.reduce((a,p)=>a+p.profit,0);
+  const totalShares=r.pairs.reduce((a,p)=>a+p.shares,0);
+  const pendingSellShares=r.unmatchedSells.reduce((a,u)=>a+u.shares,0);
+  let h=`
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">配对盈利</div><div class="stat-value ${totalProfit>=0?'profit':'loss'}">${totalProfit>=0?'+':''}${totalProfit.toFixed(2)}</div></div>
+      <div class="stat-box"><div class="stat-label">配对股数</div><div class="stat-value">${fmtNum(totalShares)}</div></div>
+      <div class="stat-box"><div class="stat-label">当前持仓</div><div class="stat-value">${fmtNum(r.totalHolding)}</div></div>
+      <div class="stat-box"><div class="stat-label">待回补</div><div class="stat-value loss">${fmtNum(pendingSellShares)}</div></div>
+    </div>`;
+  // 配对表
+  if(r.pairs.length){
+    h+='<div class="section-title">做T配对明细</div>';
+    h+='<div style="overflow-x:auto"><table class="data-table"><thead><tr><th>买入价</th><th>目标价</th><th>卖出价</th><th>股数</th><th>利润率</th><th>盈利</th></tr></thead><tbody>';
+    r.pairs.forEach(p=>{
+      h+=`<tr><td>${fmtPrice(p.buyPrice)}</td><td style="color:var(--primary);font-weight:600">${fmtPrice(p.targetPrice)}</td><td>${fmtPrice(p.sellPrice)}</td><td>${fmtNum(p.shares)}</td><td class="profit">+${p.profitRate.toFixed(2)}%</td><td class="profit">+${p.profit.toFixed(2)}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+  }
+  // 持仓分层
+  h+='<div class="section-title">持仓分层</div>';
+  if(r.baseLayers.length||r.tLayers.length){
+    h+='<div style="overflow-x:auto"><table class="data-table"><thead><tr><th>层级</th><th>价格</th><th>股数</th></tr></thead><tbody>';
+    r.baseLayers.forEach(l=>{h+=`<tr><td><span class="layer-tag base">底仓</span></td><td>${fmtPrice(l.price)}</td><td>${fmtNum(l.shares)}</td></tr>`});
+    r.tLayers.forEach(l=>{h+=`<tr><td><span class="layer-tag t">T仓</span></td><td>${fmtPrice(l.price)}</td><td>${fmtNum(l.shares)}</td></tr>`});
+    h+='</tbody></table></div>';
+  }else h+='<p style="color:#999;font-size:13px;padding:8px">无未匹配持仓</p>';
+  // 待回补
+  if(r.unmatchedSells.length){
+    h+='<div class="section-title">已卖出待回补</div>';
+    h+='<div style="overflow-x:auto"><table class="data-table"><thead><tr><th>卖出价</th><th>目标回补价</th><th>股数</th></tr></thead><tbody>';
+    r.unmatchedSells.forEach(u=>{
+      const target=round2(u.price/1.02);
+      h+=`<tr><td>${fmtPrice(u.price)}</td><td style="color:var(--sell-bg);font-weight:600">${fmtPrice(target)}</td><td>${fmtNum(u.shares)}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+  }
+  c.innerHTML=h;
+}
+
+/* ==============================================================
+   数据管理页
+   ============================================================== */
+function renderDataInfo(){
+  const stocks=Object.values(appData.stocks);
+  const totalTrades=stocks.reduce((a,s)=>a+s.trades.length,0);
+  const lastMod=appData.lastModified?fmtDateFull(appData.lastModified):'暂无';
+  document.getElementById('dataInfo').innerHTML=`
+    <div class="data-info-row"><span class="lbl">股票数量</span><span class="vl">${stocks.length} 只</span></div>
+    <div class="data-info-row"><span class="lbl">交易总笔数</span><span class="vl">${totalTrades} 笔</span></div>
+    <div class="data-info-row"><span class="lbl">最后修改</span><span class="vl">${lastMod}</span></div>
+    <div class="data-info-row"><span class="lbl">数据版本</span><span class="vl">v${appData.version}</span></div>`;
+}
+function exportData(){
+  const json=JSON.stringify(appData,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  a.download=`做T交易助手_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);showToast('数据已导出');
+}
+function importData(event){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data.stocks)throw new Error('无效的数据格式');
+      if(confirm(`确认导入数据？将覆盖当前数据。\n包含 ${Object.keys(data.stocks).length} 只股票。`)){
+        appData=data;appData.version=1;saveData();
+        renderPortfolio();updateStockSelectors();renderDataInfo();showToast('数据导入成功');
+      }
+    }catch(err){alert('导入失败：'+err.message)}
+  };
+  reader.readAsText(file);event.target.value='';
+}
+function clearAllData(){
+  if(confirm('确认清除所有数据？此操作不可恢复！')){
+    if(confirm('再次确认：所有股票和交易记录将被永久删除！')){
+      appData={version:1,lastModified:'',stocks:{}};saveData();
+      renderPortfolio();updateStockSelectors();renderDataInfo();showToast('数据已清除');
+    }
+  }
+}
+function syncToCoze(){
+  const syncData={
+    version:1,
+    lastModified:appData.lastModified||new Date().toISOString(),
+    stocks:{}
+  };
+  for(const [id,stock] of Object.entries(appData.stocks)){
+    syncData.stocks[id]={
+      id:stock.id,name:stock.name,code:stock.code,
+      baseShares:stock.baseShares||0,
+      trades:(stock.trades||[]).map(t=>({id:t.id,type:t.type,price:t.price,shares:t.shares,datetime:t.datetime,note:t.note||''}))
+    };
+  }
+  const json=JSON.stringify(syncData,null,2);
+  navigator.clipboard.writeText(json).then(()=>{
+    const sr=document.getElementById('syncResult');
+    sr.style.display='block';
+    sr.innerHTML='<div style="color:#548235;font-size:13px;padding:8px;background:#f0fff0;border-radius:6px">✅ 数据已复制到剪贴板<br>请粘贴到Coze对话中，我会自动更新持仓数据</div>';
+    showToast('已复制，请粘贴到Coze');
+    setTimeout(()=>{sr.style.display='none'},10000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=json;document.body.appendChild(ta);
+    ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    const sr=document.getElementById('syncResult');
+    sr.style.display='block';
+    sr.innerHTML='<div style="color:#548235;font-size:13px;padding:8px;background:#f0fff0;border-radius:6px">✅ 数据已复制，请粘贴到Coze对话中</div>';
+    showToast('已复制');
+  });
+}
+function showPasteSyncModal(){
+  showModal(`
+    <div class="modal-title">从Coze同步<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <p style="font-size:13px;color:#666;margin-bottom:8px">将从Coze复制的持仓数据粘贴到下方，会自动与当前数据合并。</p>
+    <textarea id="pasteSyncData" placeholder="粘贴从Coze复制的JSON数据..." style="width:100%;min-height:150px;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:12px;font-family:monospace"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-primary" onclick="confirmPasteSync()" style="flex:1">确认同步</button>
+      <button class="btn btn-outline" onclick="forceCloseModal()" style="flex:1">取消</button>
+    </div>
+  `);
+}
+function confirmPasteSync(){
+  const text=document.getElementById('pasteSyncData').value.trim();
+  if(!text){alert('请粘贴数据');return}
+  try{
+    const data=JSON.parse(text);
+    if(!data.stocks)throw new Error('无效的数据格式：缺少stocks字段');
+    let merged=0,updated=0;
+    for(const [id,stock] of Object.entries(data.stocks)){
+      if(!appData.stocks[id]){
+        appData.stocks[id]=stock;merged++;
+      }else{
+        const existing=appData.stocks[id];
+        const existIds=new Set(existing.trades.map(t=>t.id));
+        for(const t of (stock.trades||[])){
+          if(!existIds.has(t.id)){existing.trades.push(t);updated++}
+        }
+        if(stock.baseShares&&stock.baseShares>existing.baseShares)existing.baseShares=stock.baseShares;
+        if(stock.name)existing.name=stock.name;
+        if(stock.code)existing.code=stock.code;
+      }
+    }
+    saveData();forceCloseModal();
+    renderPortfolio();updateStockSelectors();renderDataInfo();
+    showToast(`同步完成：新增${merged}只，更新${updated}笔交易`);
+  }catch(err){alert('数据解析失败：'+err.message)}
+}
+
+/* ==============================================================
+   拖拽和粘贴上传支持
+   ============================================================== */
+let _currentPasteCallback = null;
+
+function setupDropArea(areaElement, fileInputId, callback) {
+  if (!areaElement) return;
+  
+  // 拖拽事件
+  areaElement.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    areaElement.classList.add('dragover');
+  });
+  
+  areaElement.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    areaElement.classList.remove('dragover');
+  });
+  
+  areaElement.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    areaElement.classList.remove('dragover');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        // 创建一个模拟的event对象
+        const fakeEvent = { target: { files: [file] } };
+        callback(fakeEvent);
+      } else {
+        showToast('请上传图片文件');
+      }
+    }
+  });
+}
+
+function enablePasteForModal(callback) {
+  _currentPasteCallback = callback;
+}
+
+function disablePasteForModal() {
+  _currentPasteCallback = null;
+}
+
+// 全局粘贴事件监听
+document.addEventListener('paste', (e) => {
+  if (!_currentPasteCallback) return;
+  
+  const items = e.clipboardData.items;
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf('image') !== -1) {
+      e.preventDefault();
+      const file = items[i].getAsFile();
+      if (file) {
+        const fakeEvent = { target: { files: [file] } };
+        _currentPasteCallback(fakeEvent);
+      }
+      return;
+    }
+  }
+});
+
+/* ==============================================================
+   模态框
+   ============================================================== */
+function showModal(html){
+  document.getElementById('modalContent').innerHTML=html;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))forceCloseModal()}
+function forceCloseModal(){document.getElementById('modalOverlay').classList.remove('show');disablePasteForModal()}
+
+/* ==============================================================
+   添加股票
+   ============================================================== */
+function showAddStockModal(){
+  showModal(`
+    <div class="modal-title">添加股票<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn btn-primary" id="addManualTab" onclick="toggleAddStockTab('manual')" style="flex:1">手动输入</button>
+      <button class="btn btn-outline" id="addOcrTab" onclick="toggleAddStockTab('ocr')" style="flex:1">截图识别</button>
+    </div>
+    <div id="addStockManual">
+      <div class="form-group"><label>股票名称</label><input id="newName" placeholder="如：盈峰环境" maxlength="20"></div>
+      <div class="form-group"><label>股票代码</label><input id="newCode" placeholder="如：000967" maxlength="10"></div>
+      <div class="form-group"><label>底仓股数（可选）</label><input id="newBase" type="number" placeholder="如：17000" min="0"></div>
+      <button class="btn btn-primary btn-block" onclick="addStock()">确认添加</button>
+    </div>
+    <div id="addStockOcr" style="display:none">
+      <div class="ocr-area" onclick="document.getElementById('addStockOcrFile').click()" id="addStockOcrArea">
+        <div class="ocr-icon" style="font-size:36px;margin-bottom:8px">📷</div>
+        <div>点击上传、拖拽或粘贴截图</div>
+        <div class="ocr-hint">支持点击选择文件 · 拖拽图片到此处 · Ctrl+V 粘贴截图</div>
+      </div>
+      <input type="file" id="addStockOcrFile" accept="image/*" style="display:none" onchange="startAddStockOcr(event)">
+      <div class="ocr-progress" id="addStockOcrProg" style="display:none">
+        <div class="pbar"><div class="pfill" id="addStockOcrFill" style="width:0%"></div></div>
+        <div class="ptxt" id="addStockOcrTxt">正在识别...</div>
+      </div>
+      <div id="addStockOcrResult"></div>
+    </div>
+  `);
+  setTimeout(()=>{
+    document.getElementById('newName').focus();
+    // 设置拖拽支持
+    const ocrArea = document.getElementById('addStockOcrArea');
+    setupDropArea(ocrArea, 'addStockOcrFile', startAddStockOcr);
+    // 设置粘贴支持
+    enablePasteForModal(startAddStockOcr);
+  },200);
+}
+function toggleAddStockTab(tab){
+  document.getElementById('addStockManual').style.display=tab==='manual'?'block':'none';
+  document.getElementById('addStockOcr').style.display=tab==='ocr'?'block':'none';
+  const mb=document.getElementById('addManualTab'),ob=document.getElementById('addOcrTab');
+  if(tab==='manual'){mb.className='btn btn-primary';ob.className='btn btn-outline'}
+  else{ob.className='btn btn-primary';mb.className='btn btn-outline'}
+}
+async function preprocessImageForOCR(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        try {
+          // 放大小图到目标尺寸，大幅提升OCR精度
+          const maxDim = Math.max(img.width, img.height);
+          const targetDim = 2000;
+          const scale = maxDim < targetDim ? targetDim / maxDim : 1;
+          const w = Math.round(img.width * scale);
+          const h = Math.round(img.height * scale);
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, 0, 0, w, h);
+          const imageData = ctx.getImageData(0, 0, w, h);
+          const d = imageData.data;
+          const pxCount = d.length / 4;
+          // 检测是否为暗色主题
+          let totalB = 0;
+          for (let i = 0; i < d.length; i += 4) totalB += 0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+          const invert = (totalB / pxCount) < 128;
+          // 转灰度并找最小最大值用于对比度拉伸
+          let minG = 255, maxG = 0;
+          const grays = new Float32Array(pxCount);
+          for (let i = 0; i < d.length; i += 4) {
+            let g = 0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+            if (invert) g = 255 - g;
+            grays[i>>2] = g;
+            if (g < minG) minG = g;
+            if (g > maxG) maxG = g;
+          }
+          // 对比度拉伸 + 二值化
+          const range = maxG - minG || 1;
+          for (let i = 0; i < pxCount; i++) {
+            let v = ((grays[i] - minG) / range) * 255;
+            v = v > 140 ? 255 : 0;
+            const idx = i << 2;
+            d[idx] = v; d[idx+1] = v; d[idx+2] = v;
+          }
+          ctx.putImageData(imageData, 0, 0);
+          canvas.toBlob(blob => resolve(blob), 'image/png');
+        } catch(err) { reject(err); }
+      };
+      img.onerror = function() { reject(new Error('图片加载失败')); };
+      img.src = e.target.result;
+    };
+    reader.onerror = function() { reject(new Error('文件读取失败')); };
+    reader.readAsDataURL(file);
+  });
+}
+async function startAddStockOcr(event){
+  const file=event.target.files[0];if(!file)return;
+  const prog=document.getElementById('addStockOcrProg');
+  const fill=document.getElementById('addStockOcrFill');
+  const ptxt=document.getElementById('addStockOcrTxt');
+  prog.style.display='block';
+  try{
+    ptxt.textContent='正在预处理图片（放大/增强对比度）...';
+    const processedFile = await preprocessImageForOCR(file);
+    ptxt.textContent='正在识别文字...';
+    const result=await Tesseract.recognize(processedFile,'chi_sim+eng',{
+      logger:m=>{if(m.status==='recognizing text'){const pct=Math.round(m.progress*100);fill.style.width=pct+'%';ptxt.textContent=`识别中 ${pct}%`}}
+    });
+    ptxt.textContent='识别完成';fill.style.width='100%';
+    const text=result.data.text;
+    const info=parsePositionFromOcr(text);
+    const rd=document.getElementById('addStockOcrResult');
+    if(info){
+      window._ocrStockInfo=info;
+      let h=`<div style="background:#f0f7ff;border-radius:8px;padding:12px;margin-top:12px">`;
+      h+=`<div class="form-group"><label>股票名称</label><input id="ocrStockName" value="${info.name||''}" placeholder="请确认名称"></div>`;
+      h+=`<div class="form-group"><label>股票代码</label><input id="ocrStockCode" value="${info.code||''}" placeholder="6位代码"></div>`;
+      h+=`<div class="form-group"><label>持仓数量</label><input id="ocrStockShares" type="number" value="${info.shares||''}" placeholder="股数"></div>`;
+      h+=`<div class="form-group"><label>成本价（可选）</label><input id="ocrStockCost" type="number" step="0.001" value="${info.cost||''}" placeholder="持仓成本"></div>`;
+      h+=`</div>`;
+      h+=`<button class="btn btn-success btn-block" onclick="confirmOcrAddStock()" style="width:100%;margin-top:8px">确认添加</button>`;
+      rd.innerHTML=h;
+    }else{
+      rd.innerHTML=`
+        <div style="margin-top:12px"><div style="font-weight:500;margin-bottom:6px">识别到的文本</div>
+        <textarea id="addStockOcrRaw" style="width:100%;min-height:100px;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px">${text.replace(/</g,'&lt;')}</textarea></div>
+        <p style="color:#999;font-size:12px;margin:8px 0">未能自动解析，请手动输入或编辑文本后重试</p>
+        <button class="btn btn-outline btn-block" onclick="retryPositionParse()" style="width:100%;margin-top:8px">重新解析</button>`;
+    }
+  }catch(err){ptxt.textContent='识别失败：'+err.message}
+}
+function parsePositionFromOcr(text){
+  function fixOcr(s){return s.replace(/[OlSQB]/g,c=>({O:'0',l:'1',S:'5',Q:'0',B:'8'}[c]||c))}
+  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l);
+  let code='',name='',shares=0,cost='';
+  // 第一遍: 按关键词精确匹配
+  for(const rawLine of lines){
+    const line=fixOcr(rawLine);
+    // 股票代码: 6位数字
+    if(!code){
+      let m=line.match(/(?:代码|证券代码|Stock)[:：\s]*(\d{6})/);
+      if(m){code=m[1];continue}
+      m=line.match(/(?:^|[\s,，;；])(\d{6})(?:[\s,，;；:]|$)/);
+      if(m)code=m[1];
+    }
+    // 股票名称
+    if(!name){
+      let m=line.match(/(?:名称|股票名称|证券名称)[:：\s]*([\u4e00-\u9fa5]{2,8})/);
+      if(m){name=m[1];continue}
+      m=line.match(/^([\u4e00-\u9fa5]{2,8}(?:股份|科技|环境|电子|集团|控股|药业|银行|实业|工业|汽车|能源|材料|通信|传媒|网络|装备|锗业|技术|医药|生物|食品|化工|地产|置业|发展|投资|证券|保险|电力|水务|燃气|交通|运输|机械|重工|造船|航天|军工|农业|牧业|矿业|资源|新能源|环保|文化|旅游|酒店|商业|超市|百货|纺织|服饰|印刷|包装|造纸|橡胶|塑料|玻璃|水泥|钢铁|有色|铝|铜|光电|芯片|半导体|软件|信息|数据|智能|机器人|光伏|储能|锂电|电池|新材))(.*)/);
+      if(m){name=m[1];continue}
+      if(code){
+        m=line.match(/([\u4e00-\u9fa5]{2,8})/);
+        if(m&&!/代码|证券|持仓|盈亏|市值|可用|冻结|名称|涨跌|今开|昨收|最高|最低|成交|委托|买入|卖出|申购|赎回|基金|指数|大盘|板块|行业/.test(m[1]))name=m[1];
+      }
+    }
+    // 持仓数量
+    if(!shares){
+      let m=line.match(/(?:持仓|持股|持仓数量|持股数量|当前持仓|可用数量|可卖数量|股票余额|证券余额|余额|总数|总份额)[:：\s]*(\d[\d,，]*)/);
+      if(!m)m=line.match(/(\d[\d,，]*)\s*(?:股|份)(?:\s|$|[^\d])/);
+      if(m){const v=parseInt(m[1].replace(/[,\uff0c]/g,''));if(v>=100&&v<=50000000)shares=v}
+    }
+    // 成本价
+    if(!cost){
+      let m=line.match(/(?:成本|持仓成本|参考成本|保本价|成本价格|买入均价|建仓价|均价|成本价|摊薄成本)[:：\s]*(\d+\.?\d*)/);
+      if(m){const v=parseFloat(m[1]);if(v>0.01&&v<100000)cost=m[1]}
+    }
+  }
+  // 第二遍: 宽松后备匹配
+  if(!shares){
+    const candidates=[];
+    for(const rawLine of lines){
+      const line=fixOcr(rawLine);
+      const m=line.match(/\b(\d[\d,，]*)\b/g);
+      if(m)for(const s of m){
+        const v=parseInt(s.replace(/[,\uff0c]/g,''));
+        if(v>=100&&v<=50000000&&v%100===0)candidates.push({v,line});
+      }
+    }
+    if(candidates.length)shares=candidates[0].v;
+  }
+  if(!cost){
+    for(const rawLine of lines){
+      const line=fixOcr(rawLine);
+      const m=line.match(/(\d+\.\d{2,4})/g);
+      if(m)for(const p of m){
+        const v=parseFloat(p);
+        if(v>0.5&&v<100000){cost=p;break}
+      }
+      if(cost)break;
+    }
+  }
+  if(name||code||shares)return{name:name||'',code:code||'',shares:shares||0,cost:cost||''};
+  return null;
+}
+function retryPositionParse(){
+  const text=document.getElementById('addStockOcrRaw').value;
+  const info=parsePositionFromOcr(text);
+  const rd=document.getElementById('addStockOcrResult');
+  if(info){
+    window._ocrStockInfo=info;
+    let h=`<div style="background:#f0f7ff;border-radius:8px;padding:12px;margin-top:12px">`;
+    h+=`<div class="form-group"><label>股票名称</label><input id="ocrStockName" value="${info.name||''}" placeholder="请确认名称"></div>`;
+    h+=`<div class="form-group"><label>股票代码</label><input id="ocrStockCode" value="${info.code||''}" placeholder="6位代码"></div>`;
+    h+=`<div class="form-group"><label>持仓数量</label><input id="ocrStockShares" type="number" value="${info.shares||''}" placeholder="股数"></div>`;
+    h+=`<div class="form-group"><label>成本价（可选）</label><input id="ocrStockCost" type="number" step="0.001" value="${info.cost||''}" placeholder="持仓成本"></div>`;
+    h+=`</div>`;
+    h+=`<button class="btn btn-success btn-block" onclick="confirmOcrAddStock()" style="width:100%;margin-top:8px">确认添加</button>`;
+    rd.innerHTML=h;
+  }else alert('仍未解析到有效持仓信息，请手动输入');
+}
+function confirmOcrAddStock(){
+  const name=document.getElementById('ocrStockName').value.trim();
+  const code=document.getElementById('ocrStockCode').value.trim();
+  const shares=parseInt(document.getElementById('ocrStockShares').value)||0;
+  const cost=parseFloat(document.getElementById('ocrStockCost').value)||0;
+  if(!name||!code){alert('请填写股票名称和代码');return}
+  if(Object.values(appData.stocks).find(s=>s.code===code)){alert('该股票代码已存在');return}
+  const id=uuid();
+  const trades=[];
+  if(shares>0){
+    trades.push({id:uuid(),type:'buy',price:cost||0,shares:shares,datetime:new Date().toISOString(),note:'截图识别建仓'});
+  }
+  appData.stocks[id]={id,name,code,trades:trades,baseShares:shares,createdAt:new Date().toISOString()};
+  saveData();forceCloseModal();renderPortfolio();updateStockSelectors();showToast('已添加：'+name+(shares?` (${shares}股)`:''));
+}
+function addStock(){
+  const name=document.getElementById('newName').value.trim();
+  const code=document.getElementById('newCode').value.trim();
+  const base=parseInt(document.getElementById('newBase').value)||0;
+  if(!name||!code){alert('请填写股票名称和代码');return}
+  if(Object.values(appData.stocks).find(s=>s.code===code)){alert('该股票代码已存在');return}
+  const id=uuid();
+  appData.stocks[id]={id,name,code,trades:[],baseShares:base,createdAt:new Date().toISOString()};
+  saveData();forceCloseModal();renderPortfolio();updateStockSelectors();showToast('已添加：'+name);
+}
+
+/* ==============================================================
+   手动录入交易
+   ============================================================== */
+function showManualTradeModal(){
+  const stockId=document.getElementById('tradeStockSelect').value;
+  if(!stockId){alert('请先选择股票');return}
+  showManualTradeModalForStock(stockId);
+}
+function showManualTradeModalForStock(stockId){
+  _actionStockId=stockId;
+  const now=new Date();
+  const dt=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  showModal(`
+    <div class="modal-title">录入交易<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <div class="form-row">
+      <div class="form-group"><label>类型</label><select id="tType"><option value="buy">买入</option><option value="sell">卖出</option></select></div>
+      <div class="form-group"><label>日期时间</label><input id="tDatetime" type="datetime-local" value="${dt}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>价格</label><input id="tPrice" type="number" step="0.001" placeholder="如 10.19"></div>
+      <div class="form-group"><label>股数</label><input id="tShares" type="number" step="100" placeholder="如 2400"></div>
+    </div>
+    <div class="form-group"><label>备注（可选）</label><input id="tNote" placeholder="可选备注"></div>
+    <button class="btn btn-primary btn-block" onclick="saveManualTrade()">保存</button>
+  `);
+  setTimeout(()=>document.getElementById('tPrice').focus(),200);
+}
+function saveManualTrade(){
+  const type=document.getElementById('tType').value;
+  const datetime=document.getElementById('tDatetime').value;
+  const price=parseFloat(document.getElementById('tPrice').value);
+  const shares=parseInt(document.getElementById('tShares').value);
+  const note=document.getElementById('tNote').value.trim();
+  if(!datetime||isNaN(price)||isNaN(shares)||shares<=0){alert('请完整填写价格、股数和时间');return}
+  appData.stocks[_actionStockId].trades.push({id:uuid(),type,price,shares,datetime:new Date(datetime).toISOString(),note});
+  saveData();forceCloseModal();
+  renderTradeList();
+  if(document.getElementById('stockDetail').classList.contains('show'))renderStockDetail(_actionStockId);
+  showToast('交易已保存');
+}
+
+/* ==============================================================
+   批量导入
+   ============================================================== */
+function showBatchImportModal(){
+  const stockId=document.getElementById('tradeStockSelect').value;
+  if(!stockId){alert('请先选择股票');return}
+  showBatchImportModalForStock(stockId);
+}
+function showBatchImportModalForStock(stockId){
+  _actionStockId=stockId;
+  showModal(`
+    <div class="modal-title">批量导入交易<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <p style="font-size:13px;color:#666;margin-bottom:10px">每行格式：<code>价格 +/-股数</code><br>示例：<code>10.19 +2400</code> 买入，<code>10.42 -800</code> 卖出</p>
+    <div class="form-group"><textarea id="batchText" placeholder="10.19 +2400&#10;10.42 -800&#10;9.73 +900"></textarea></div>
+    <button class="btn btn-primary btn-sm btn-block" onclick="previewBatchImport()">解析预览</button>
+    <div id="batchPreview"></div>
+  `);
+}
+function parseBatchText(text){
+  const lines=text.split('\n'),results=[];
+  lines.forEach(line=>{
+    line=line.trim();if(!line)return;
+    const m=line.match(/([\d.]+)\s*([+\-＋－])\s*(\d+)/);
+    if(m){
+      const price=parseFloat(m[1]);
+      const isBuy=(m[2]==='+'||m[2]==='＋');
+      const shares=parseInt(m[3]);
+      if(price>0&&shares>0)results.push({price,type:isBuy?'buy':'sell',shares});
+    }
+  });
+  return results;
+}
+function previewBatchImport(){
+  const text=document.getElementById('batchText').value;
+  const records=parseBatchText(text);
+  const c=document.getElementById('batchPreview');
+  if(!records.length){c.innerHTML='<p style="color:#999;font-size:13px">未解析到有效记录</p>';return}
+  let h=`<p style="font-size:13px;margin-bottom:6px">解析到 <b>${records.length}</b> 条记录：</p><div class="preview-list">`;
+  records.forEach(r=>{
+    const tag=r.type==='buy'?'<span class="trade-tag buy">买</span>':'<span class="trade-tag sell">卖</span>';
+    h+=`<div class="preview-item">${tag}<span style="margin-left:8px">${fmtPrice(r.price)} × ${fmtNum(r.shares)}股</span></div>`;
+  });
+  h+='</div><button class="btn btn-success btn-block" onclick="confirmBatchImport()" style="width:100%;margin-top:8px">确认导入</button>';
+  c.innerHTML=h;
+  window._batchRecords=records;
+}
+function confirmBatchImport(){
+  if(!_actionStockId||!appData.stocks[_actionStockId]){alert('无法确定目标股票');return}
+  const records=window._batchRecords||[];
+  const now=Date.now();
+  records.forEach((r,i)=>{
+    appData.stocks[_actionStockId].trades.push({id:uuid(),type:r.type,price:r.price,shares:r.shares,datetime:new Date(now+i*1000).toISOString(),note:'批量导入'});
+  });
+  saveData();forceCloseModal();
+  renderTradeList();
+  if(document.getElementById('stockDetail').classList.contains('show'))renderStockDetail(_actionStockId);
+  showToast(`已导入 ${records.length} 条交易`);
+}
+
+/* ==============================================================
+   OCR截图识别
+   ============================================================== */
+function showOcrModal(){
+  const stockId=document.getElementById('tradeStockSelect').value;
+  if(!stockId){alert('请先选择股票');return}
+  showOcrModalForStock(stockId);
+}
+function showOcrModalForStock(stockId){
+  _actionStockId=stockId;
+  showModal(`
+    <div class="modal-title">截图识别交易<button class="modal-close" onclick="forceCloseModal()">×</button></div>
+    <div class="ocr-area" onclick="document.getElementById('ocrFile').click()" id="ocrDropArea">
+      <div class="ocr-icon" style="font-size:36px;margin-bottom:8px">📷</div>
+      <div>点击上传、拖拽或粘贴截图</div>
+      <div class="ocr-hint">支持点击选择文件 · 拖拽图片到此处 · Ctrl+V 粘贴截图</div>
+    </div>
+    <input type="file" id="ocrFile" accept="image/*" style="display:none" onchange="startOcr(event)">
+    <div class="ocr-progress" id="ocrProgress">
+      <div class="pbar"><div class="pfill" id="ocrPFill" style="width:0%"></div></div>
+      <div class="ptxt" id="ocrPTxt">正在识别...</div>
+    </div>
+    <div id="ocrResult"></div>
+  `);
+  setTimeout(()=>{
+    const ocrArea = document.getElementById('ocrDropArea');
+    setupDropArea(ocrArea, 'ocrFile', startOcr);
+    enablePasteForModal(startOcr);
+  },200);
+}
+async function startOcr(event){
+  const file=event.target.files[0];if(!file)return;
+  const prog=document.getElementById('ocrProgress');
+  const fill=document.getElementById('ocrPFill');
+  const ptxt=document.getElementById('ocrPTxt');
+  prog.style.display='block';
+  try{
+    ptxt.textContent='正在预处理图片（放大/增强对比度）...';
+    const processedFile = await preprocessImageForOCR(file);
+    ptxt.textContent='正在识别文字...';
+    const result=await Tesseract.recognize(processedFile,'chi_sim+eng',{
+      logger:m=>{
+        if(m.status==='recognizing text'){
+          const pct=Math.round(m.progress*100);
+          fill.style.width=pct+'%';ptxt.textContent=`识别中 ${pct}%`;
+        }
+      }
+    });
+    ptxt.textContent='识别完成';fill.style.width='100%';
+    const text=result.data.text;
+    const records=extractTradesFromOcr(text);
+    const rd=document.getElementById('ocrResult');
+    if(records.length){
+      window._batchRecords=records;
+      let h=`<div class="section-title">识别结果（${records.length}条）</div><div class="preview-list">`;
+      records.forEach(r=>{
+        const tag=r.type==='buy'?'<span class="trade-tag buy">买</span>':'<span class="trade-tag sell">卖</span>';
+        h+=`<div class="preview-item">${tag}<span style="margin-left:8px">${fmtPrice(r.price)} × ${fmtNum(r.shares)}股</span></div>`;
+      });
+      h+='</div><button class="btn btn-success btn-block" onclick="confirmOcrImport()" style="width:100%;margin-top:8px">确认导入</button>';
+      rd.innerHTML=h;
+    }else{
+      rd.innerHTML=`
+        <div class="section-title">识别到的文本</div>
+        <textarea id="ocrRawText" style="width:100%;min-height:100px;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px">${text.replace(/</g,'&lt;')}</textarea>
+        <p style="color:#999;font-size:12px;margin:8px 0">未能自动解析，请手动编辑后使用批量导入</p>
+        <button class="btn btn-primary btn-block" onclick="retryOcrParse()" style="width:100%;margin-top:8px">重新解析</button>`;
+    }
+  }catch(err){ptxt.textContent='识别失败：'+err.message}
+}
+function extractTradesFromOcr(text){
+  const records=[],lines=text.split('\n');
+  // OCR常见数字纠错
+  function fixOcrDigits(s){
+    return s.replace(/[OlSQB]/g,c=>({O:'0',l:'1',S:'5',Q:'0',B:'8'}[c]||c));
+  }
+  lines.forEach(rawLine=>{
+    let line=fixOcrDigits(rawLine).trim();
+    if(!line)return;
+    // 买入/卖出关键词模式: "买入 10.19 2400" 或 "买入10.19×2400"
+    let m=line.match(/(?:证券)?买[入进]?\s*([\d.]+)\s*[×xX*]?\s*(\d+)/);
+    if(m){const p=parseFloat(m[1]),s=parseInt(m[2]);if(p>0&&s>=100&&p<100000){records.push({price:p,type:'buy',shares:s});return}}
+    m=line.match(/(?:证券)?卖[出]?\s*([\d.]+)\s*[×xX*]?\s*(\d+)/);
+    if(m){const p=parseFloat(m[1]),s=parseInt(m[2]);if(p>0&&s>=100&&p<100000){records.push({price:p,type:'sell',shares:s});return}}
+    // 反向: "买入 2400 @10.19" 或 "买入 2400股 10.19"
+    m=line.match(/(?:买[入进]?|卖[出]?)\s*(\d+)\s*(?:股|份)?\s*[@@价]?\s*([\d.]+)/);
+    if(m){const s=parseInt(m[1]),p=parseFloat(m[2]);if(p>0&&s>=100&&p<100000){const type=/买/.test(line)?'buy':'sell';records.push({price:p,type,shares:s});return}}
+    // +/- 模式: "10.19 +2400" / "10.42 -800"
+    m=line.match(/([\d.]+)\s*([+＋])\s*(\d+)/);
+    if(m){const p=parseFloat(m[1]),s=parseInt(m[3]);if(p>0&&s>=100&&p<100000){records.push({price:p,type:'buy',shares:s});return}}
+    m=line.match(/([\d.]+)\s*([-－])\s*(\d+)/);
+    if(m){const p=parseFloat(m[1]),s=parseInt(m[3]);if(p>0&&s>=100&&p<100000){records.push({price:p,type:'sell',shares:s});return}}
+    // 表格行格式: 含买/卖关键词的行，从中提取价格(带小数)和数量(整百)
+    if(/买|卖|买入|卖出/.test(line)){
+      const nums=line.match(/\d+\.?\d*/g);
+      if(nums&&nums.length>=2){
+        const isBuy=/买/.test(line);
+        let price=0,shares=0;
+        for(const n of nums){
+          const v=parseFloat(n);
+          if(!price&&n.includes('.')&&v>0&&v<100000)price=v;
+          else if(!shares&&v>=100&&v<=10000000&&v%100===0)shares=v;
+        }
+        if(price>0&&shares>=100){records.push({price,type:isBuy?'buy':'sell',shares});return}
+      }
+    }
+  });
+  return records;
+}
+function retryOcrParse(){
+  const text=document.getElementById('ocrRawText').value;
+  const records=parseBatchText(text);
+  if(records.length){
+    window._batchRecords=records;
+    let h=`<div class="section-title">解析结果（${records.length}条）</div><div class="preview-list">`;
+    records.forEach(r=>{
+      const tag=r.type==='buy'?'<span class="trade-tag buy">买</span>':'<span class="trade-tag sell">卖</span>';
+      h+=`<div class="preview-item">${tag}<span style="margin-left:8px">${fmtPrice(r.price)} × ${fmtNum(r.shares)}股</span></div>`;
+    });
+    h+='</div><button class="btn btn-success btn-block" onclick="confirmOcrImport()" style="width:100%;margin-top:8px">确认导入</button>';
+    document.getElementById('ocrResult').innerHTML=h;
+  }else alert('仍未解析到有效记录，请检查文本格式');
+}
+function confirmOcrImport(){
+  if(!_actionStockId||!appData.stocks[_actionStockId]){alert('无法确定目标股票');return}
+  const records=window._batchRecords||[];
+  const now=Date.now();
+  records.forEach((r,i)=>{
+    appData.stocks[_actionStockId].trades.push({id:uuid(),type:r.type,price:r.price,shares:r.shares,datetime:new Date(now+i*1000).toISOString(),note:'截图识别'});
+  });
+  saveData();forceCloseModal();
+  renderTradeList();
+  if(document.getElementById('stockDetail').classList.contains('show'))renderStockDetail(_actionStockId);
+  showToast(`已导入 ${records.length} 条交易`);
+}
+
+/* ==============================================================
+   页面返回
+   ============================================================== */
+function goBack(){if(document.getElementById('stockDetail').classList.contains('show'))closeStockDetail()}
+
+/* ==============================================================
+   初始化
+   ============================================================== */
+loadData();
+renderPortfolio();
+updateStockSelectors();
+renderDataInfo();
+</script>
+</body>
+</html>
