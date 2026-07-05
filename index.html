@@ -280,7 +280,7 @@ body{
    全局数据与工具
    ============================================================== */
 const STORAGE_KEY = 'trading_assistant_data';
-const CLOUD_SYNC_DATA = {"version": 1,"lastModified": "2026-07-03T16:21:00","stocks": {},"syncSource": "coze_agent"};
+const CLOUD_SYNC_DATA = {"version":1,"lastModified":"2026-07-05T15:36:00","stocks":{"a1b2c3d4":{"id":"a1b2c3d4","name":"宏和科技","code":"603256","baseShares":200,"createdAt":"2026-07-05T15:36:00","trades":[]},"e5f6g7h8":{"id":"e5f6g7h8","name":"盈峰环境","code":"000967","baseShares":20900,"createdAt":"2026-07-05T15:36:00","trades":[]},"i9j0k1l2":{"id":"i9j0k1l2","name":"顺络电子","code":"002138","baseShares":400,"createdAt":"2026-07-05T15:36:00","trades":[]},"m3n4o5p6":{"id":"m3n4o5p6","name":"昊华科技","code":"600378","baseShares":600,"createdAt":"2026-07-05T15:36:00","trades":[]},"q7r8s9t0":{"id":"q7r8s9t0","name":"利通电子","code":"603629","baseShares":1300,"createdAt":"2026-07-05T15:36:00","trades":[]}},"syncSource":"coze_agent"};
 let appData = { version:1, lastModified:'', stocks:{} };
 // 跟踪当前操作的股票ID（用于批量导入/OCR确认时回写）
 let _actionStockId = '';
