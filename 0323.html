@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆谁是牛中牛争霸赛·3月23日复盘版 | 2026年3月23日</title>
+    <style>
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2128;
+            --bg-hover: #21262d;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-gold: #f0b429;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-red: #f85149;
+            --accent-orange: #d29922;
+            --accent-purple: #bc8cff;
+            --accent-cyan: #39d2c0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 20px;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1f35 0%, #0d1117 50%, #1a2332 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(88,166,255,0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(240,180,41,0.06) 0%, transparent 60%);
+        }
+        .header h1 {
+            font-size: 2.2em;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            position: relative;
+        }
+        .header .meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .header .meta span {
+            background: rgba(88,166,255,0.1);
+            border: 1px solid rgba(88,166,255,0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--accent-blue);
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav-tab {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        .nav-tab:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .nav-tab.active {
+            background: rgba(88,166,255,0.15);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        
+        /* Section */
+        .section { display: none; }
+        .section.active { display: block; }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title .icon { font-size: 1.3em; }
+        
+        /* Ranking Table */
+        .rank-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .rank-table thead th {
+            background: linear-gradient(135deg, #1a2332, #161b22);
+            padding: 14px 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.88em;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+        .rank-table tbody td {
+            padding: 14px 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92em;
+        }
+        .rank-table tbody tr { transition: background 0.2s; }
+        .rank-table tbody tr:hover { background: var(--bg-hover); }
+        .rank-table tbody tr:last-child td { border-bottom: none; }
+        
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+        .rank-1 { background: linear-gradient(135deg, #f0b429, #d4940a); color: #000; }
+        .rank-2 { background: linear-gradient(135deg, #8b949e, #6e7681); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0612a); color: #fff; }
+        .rank-other { background: var(--bg-hover); color: var(--text-secondary); }
+        
+        .score-cell {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .score-high { color: var(--accent-green); }
+        .score-mid { color: var(--accent-gold); }
+        .score-low { color: var(--accent-red); }
+        
+        .stock-name {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+        .stock-tag {
+            color: var(--accent-cyan);
+            font-size: 0.82em;
+            background: rgba(57,210,192,0.08);
+            border: 1px solid rgba(57,210,192,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        /* Score Bar */
+        .score-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .score-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-hover);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        .score-bar-val {
+            font-size: 0.85em;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+        }
+        
+        /* Stock Detail Card */
+        .stock-detail {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .stock-title {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        .stock-total-score {
+            font-size: 2em;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .stock-total-label {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+        .tag-green { background: rgba(63,185,80,0.15); color: var(--accent-green); border: 1px solid rgba(63,185,80,0.3); }
+        .tag-red { background: rgba(248,81,73,0.15); color: var(--accent-red); border: 1px solid rgba(248,81,73,0.3); }
+        .tag-blue { background: rgba(88,166,255,0.15); color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.3); }
+        .tag-gold { background: rgba(240,180,41,0.15); color: var(--accent-gold); border: 1px solid rgba(240,180,41,0.3); }
+        .tag-purple { background: rgba(188,140,255,0.15); color: var(--accent-purple); border: 1px solid rgba(188,140,255,0.3); }
+        
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .info-box-title {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .info-box-value {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
+        /* Score Detail Table */
+        .score-detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88em;
+        }
+        .score-detail-table th {
+            background: var(--bg-secondary);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+        .score-detail-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(48,54,61,0.5);
+        }
+        .score-detail-table tr:hover { background: var(--bg-hover); }
+        .score-detail-table .subtotal-row {
+            background: rgba(88,166,255,0.05);
+            font-weight: 700;
+        }
+        .score-detail-table .subtotal-row td {
+            border-bottom: 2px solid var(--border);
+            color: var(--accent-blue);
+        }
+        
+        /* Risk Box */
+        .risk-box {
+            background: rgba(248,81,73,0.05);
+            border: 1px solid rgba(248,81,73,0.2);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .risk-box h4 {
+            color: var(--accent-red);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .risk-box ul {
+            padding-left: 18px;
+            color: var(--text-secondary);
+            font-size: 0.88em;
+        }
+        .risk-box li { margin-bottom: 4px; }
+        
+        /* Conclusion Box */
+        .conclusion-box {
+            background: rgba(63,185,80,0.05);
+            border: 1px solid rgba(63,185,80,0.2);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .conclusion-box h4 {
+            color: var(--accent-green);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .conclusion-box p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+        
+        /* Probability Bar */
+        .prob-bar {
+            display: flex;
+            height: 24px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .prob-up {
+            background: linear-gradient(90deg, rgba(63,185,80,0.6), rgba(63,185,80,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78em;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+        .prob-down {
+            background: linear-gradient(90deg, rgba(248,81,73,0.3), rgba(248,81,73,0.6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78em;
+            font-weight: 600;
+            color: var(--accent-red);
+        }
+        
+        /* Radar Chart Placeholder */
+        .radar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .radar-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+        .radar-label { color: var(--text-secondary); font-size: 0.85em; }
+        .radar-value { font-weight: 700; font-size: 0.95em; }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.82em;
+            line-height: 1.8;
+        }
+        .disclaimer strong { color: var(--accent-orange); }
+        
+        /* Group Header */
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .group-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+        }
+        .group-icon-semi { background: rgba(88,166,255,0.15); }
+        .group-icon-mat { background: rgba(63,185,80,0.15); }
+        .group-icon-mfg { background: rgba(240,180,41,0.15); }
+        
+        /* Summary Table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+            margin-top: 12px;
+        }
+        .summary-table th {
+            background: var(--bg-secondary);
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+        .summary-table td {
+            padding: 8px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(48,54,61,0.5);
+        }
+        .summary-table tr:hover { background: var(--bg-hover); }
+        
+        /* Highlight */
+        .highlight-up { color: var(--accent-green); }
+        .highlight-down { color: var(--accent-red); }
+        
+        /* Collapsible */
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .collapsible-header::before {
+            content: '▶';
+            font-size: 0.7em;
+            transition: transform 0.3s;
+        }
+        .collapsible-header.open::before {
+            transform: rotate(90deg);
+        }
+        .collapsible-body {
+            display: none;
+            margin-top: 12px;
+        }
+        .collapsible-body.open {
+            display: block;
+        }
+        
+        /* Animate */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section.active { animation: fadeIn 0.3s ease; }
+        
+        /* Print */
+        @media print {
+            body { background: #fff; color: #333; }
+            .nav-tabs { display: none; }
+            .section { display: block !important; page-break-inside: avoid; }
+            .card, .stock-detail { border: 1px solid #ddd; }
+        }
+    
+
+        /* Compare Section */
+        .compare-bar {
+            height: 20px;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🏆谁是牛中牛争霸赛·3月23日复盘版</h1>
+        <div class="subtitle">竹石三角色分析 + 五维评分体系 | 半导体 · 材料 · 制造 三组并行</div>
+        <div class="meta">
+            <span>📅 数据基准日：2026年3月23日</span>
+            <span>📊 数据截止：2026年3月23日收盘</span>
+            <span>🏦 财务基准：2025年报/2025Q3</span>
+            <span>📐 满分：100分</span>
+            <span>🔄 含7月9日对比</span>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="showSection('overview')">🏆 评分总览</div>
+        <div class="nav-tab" onclick="showSection('semi')">💎 半导体组</div>
+        <div class="nav-tab" onclick="showSection('material')">🧱 材料组</div>
+        <div class="nav-tab" onclick="showSection('manufacture')">⚙️ 制造组</div>
+        <div class="nav-tab" onclick="showSection('compare')">🔄 3/23 vs 7/9对比</div>
+        <div class="nav-tab" onclick="showSection('framework')">🏆谁是牛中牛争霸赛</div>
+    </div>
+    
+    <!-- ==================== 总览页 ==================== -->
+    <div id="overview" class="section active">
+        
+        <!-- 总排名表 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🏆</span> 十三股五维评分总排名（3月23日）</div>
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>股票</th>
+                        <th>标签</th>
+                        <th>分组</th>
+                        <th>基本面<br><small>(25分)</small></th>
+                        <th>技术面<br><small>(20分)</small></th>
+                        <th>市场前景<br><small>(20分)</small></th>
+                        <th>板块热度<br><small>(15分)</small></th>
+                        <th>稀缺性<br><small>(20分)</small></th>
+                        <th>总分<br><small>(100分)</small></th>
+                        <th>与7/9对比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="rank-badge rank-1">1</span></td>
+                        <td><span class="stock-name">中国巨石</span></td>
+                        <td><span class="stock-tag">玻纤全球龙头</span></td>
+                        <td><span class="tag tag-tag-green">材料</span></td>
+                        <td class="score-cell score-high">22</td>
+                        <td class="score-cell score-high">14</td>
+                        <td class="score-cell score-high">17</td>
+                        <td class="score-cell score-high">11</td>
+                        <td class="score-cell score-high">16</td>
+                        <td class="score-cell score-high" style="font-size:1.3em">80</td>
+                        <td><span class="highlight-down">-1</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-2">2</span></td>
+                        <td><span class="stock-name">兆易创新</span></td>
+                        <td><span class="stock-tag">存储+MCU双龙头</span></td>
+                        <td><span class="tag tag-tag-blue">半导体</span></td>
+                        <td class="score-cell score-high">22</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">17</td>
+                        <td class="score-cell score-high" style="font-size:1.3em">79</td>
+                        <td><span class="highlight-up">+4</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-3">3</span></td>
+                        <td><span class="stock-name">北方华创</span></td>
+                        <td><span class="stock-tag">半导体设备龙头</span></td>
+                        <td><span class="tag tag-tag-blue">半导体</span></td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-low">8</td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-mid">8</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-high" style="font-size:1.3em">75</td>
+                        <td><span class="highlight-down">-3</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">4</span></td>
+                        <td><span class="stock-name">东山精密</span></td>
+                        <td><span class="stock-tag">PCB+光模块双龙头</span></td>
+                        <td><span class="tag tag-tag-gold">制造</span></td>
+                        <td class="score-cell score-high">18</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">15</td>
+                        <td class="score-cell score-high" style="font-size:1.3em">72</td>
+                        <td><span class="highlight-down">-6.5</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">5</span></td>
+                        <td><span class="stock-name">雅克科技</span></td>
+                        <td><span class="stock-tag">半导体材料龙头</span></td>
+                        <td><span class="tag tag-tag-blue">半导体</span></td>
+                        <td class="score-cell score-mid">16</td>
+                        <td class="score-cell score-low">8</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-mid">9</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-high" style="font-size:1.2em">71</td>
+                        <td><span style="color:var(--text-muted)">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">6</span></td>
+                        <td><span class="stock-name">云南锗业</span></td>
+                        <td><span class="stock-tag">锗材料龙头</span></td>
+                        <td><span class="tag tag-tag-green">材料</span></td>
+                        <td class="score-cell score-low">8</td>
+                        <td class="score-cell score-low">9</td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-high">13</td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-high" style="font-size:1.2em">70</td>
+                        <td><span class="highlight-up">+4</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">7</span></td>
+                        <td><span class="stock-name">宏和科技</span></td>
+                        <td><span class="stock-tag">电子纱龙头</span></td>
+                        <td><span class="tag tag-tag-green">材料</span></td>
+                        <td class="score-cell score-mid">14</td>
+                        <td class="score-cell score-low">7</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">18</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">68</td>
+                        <td><span class="highlight-down">-8</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">8</span></td>
+                        <td><span class="stock-name">长电科技</span></td>
+                        <td><span class="stock-tag">先进封装全球第三</span></td>
+                        <td><span class="tag tag-tag-blue">半导体</span></td>
+                        <td class="score-cell score-low">12</td>
+                        <td class="score-cell score-low">7</td>
+                        <td class="score-cell score-high">20</td>
+                        <td class="score-cell score-mid">8</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">66</td>
+                        <td><span class="highlight-down">-9</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">9</span></td>
+                        <td><span class="stock-name">德明利</span></td>
+                        <td><span class="stock-tag">存储模组龙头</span></td>
+                        <td><span class="tag tag-tag-gold">制造</span></td>
+                        <td class="score-cell score-mid">16</td>
+                        <td class="score-cell score-low">9</td>
+                        <td class="score-cell score-high">18</td>
+                        <td class="score-cell score-low">7</td>
+                        <td class="score-cell score-high">15</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">65</td>
+                        <td><span class="highlight-down">-5</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">10</span></td>
+                        <td><span class="stock-name">中科曙光</span></td>
+                        <td><span class="stock-tag">国产算力龙头</span></td>
+                        <td><span class="tag tag-tag-blue">半导体</span></td>
+                        <td class="score-cell score-mid">15</td>
+                        <td class="score-cell score-low">6</td>
+                        <td class="score-cell score-high">18</td>
+                        <td class="score-cell score-mid">8</td>
+                        <td class="score-cell score-high">17</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">64</td>
+                        <td><span class="highlight-down">-10</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">11</span></td>
+                        <td><span class="stock-name">有研新材</span></td>
+                        <td><span class="stock-tag">稀有金属+红外材料</span></td>
+                        <td><span class="tag tag-tag-green">材料</span></td>
+                        <td class="score-cell score-low">10</td>
+                        <td class="score-cell score-low">5</td>
+                        <td class="score-cell score-high">19</td>
+                        <td class="score-cell score-mid">10</td>
+                        <td class="score-cell score-high">18</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">62</td>
+                        <td><span class="highlight-down">-17</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">12</span></td>
+                        <td><span class="stock-name">利通电子</span></td>
+                        <td><span class="stock-tag">精密结构件+散热</span></td>
+                        <td><span class="tag tag-tag-gold">制造</span></td>
+                        <td class="score-cell score-mid">14</td>
+                        <td class="score-cell score-low">8</td>
+                        <td class="score-cell score-high">16</td>
+                        <td class="score-cell score-mid">8</td>
+                        <td class="score-cell score-high">14</td>
+                        <td class="score-cell score-mid" style="font-size:1.2em">60</td>
+                        <td><span class="highlight-down">-11.5</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">13</span></td>
+                        <td><span class="stock-name">黄河旋风</span></td>
+                        <td><span class="stock-tag">培育钻石+超硬材料</span></td>
+                        <td><span class="tag tag-tag-gold">制造</span></td>
+                        <td class="score-cell score-low">3</td>
+                        <td class="score-cell score-low">5</td>
+                        <td class="score-cell score-high">14</td>
+                        <td class="score-cell score-low">7</td>
+                        <td class="score-cell score-high">17</td>
+                        <td class="score-cell score-low" style="font-size:1.2em">46</td>
+                        <td><span class="highlight-down">-14.5</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 分组对比 -->
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-title"><span class="icon">💎</span> 半导体组</div>
+                <div style="color:var(--text-secondary); font-size:0.9em; margin-bottom:12px">兆易创新 · 北方华创 · 雅克科技 · 长电科技 · 中科曙光</div>
+                <div style="font-size:0.88em; color:var(--text-secondary)">
+                    <div style="margin-bottom:8px">🥇 兆易创新 <strong style="color:var(--accent-green)">79分</strong></div>
+                    <div style="margin-bottom:8px">🥈 北方华创 <strong style="color:var(--accent-green)">75分</strong></div>
+                    <div style="margin-bottom:8px">🥉 雅克科技 <strong style="color:var(--accent-gold)">71分</strong></div>
+                    <div style="margin-bottom:8px">🏅 长电科技 <strong style="color:var(--accent-gold)">66分</strong></div>
+                    <div style="margin-bottom:8px">🏅 中科曙光 <strong style="color:var(--accent-cyan)">64分</strong></div>
+                </div>
+                <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-size:0.82em; color:var(--text-muted)">
+                    核心逻辑：长鑫IPO催化 + 存储涨价 + 国产替代
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><span class="icon">🧱</span> 材料组</div>
+                <div style="color:var(--text-secondary); font-size:0.9em; margin-bottom:12px">中国巨石 · 云南锗业 · 宏和科技 · 有研新材</div>
+                <div style="font-size:0.88em; color:var(--text-secondary)">
+                    <div style="margin-bottom:8px">🥇 中国巨石 <strong style="color:var(--accent-green)">80分</strong></div>
+                    <div style="margin-bottom:8px">🥈 云南锗业 <strong style="color:var(--accent-gold)">70分</strong></div>
+                    <div style="margin-bottom:8px">🥉 宏和科技 <strong style="color:var(--accent-gold)">68分</strong></div>
+                    <div style="margin-bottom:8px">🏅 有研新材 <strong style="color:var(--accent-cyan)">62分</strong></div>
+                </div>
+                <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-size:0.82em; color:var(--text-muted)">
+                    核心逻辑：电子布涨价 + 靶材国产替代 + 锗/磷化铟稀缺
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><span class="icon">⚙️</span> 制造组</div>
+                <div style="color:var(--text-secondary); font-size:0.9em; margin-bottom:12px">东山精密 · 德明利 · 利通电子 · 黄河旋风</div>
+                <div style="font-size:0.88em; color:var(--text-secondary)">
+                    <div style="margin-bottom:8px">🥇 东山精密 <strong style="color:var(--accent-gold)">72分</strong></div>
+                    <div style="margin-bottom:8px">🥈 德明利 <strong style="color:var(--accent-gold)">65分</strong></div>
+                    <div style="margin-bottom:8px">🥉 利通电子 <strong style="color:var(--accent-cyan)">60分</strong></div>
+                    <div style="margin-bottom:8px">🏅 黄河旋风 <strong style="color:var(--accent-red)">46分</strong></div>
+                </div>
+                <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-size:0.82em; color:var(--text-muted)">
+                    核心逻辑：AI光模块 + 算力租赁 + 存储模组 + 金刚石散热
+                </div>
+            </div>
+        </div>
+        <!-- 市场环境 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📉</span> 3月23日市场环境</div>
+            <div class="grid-3">
+                <div class="info-box">
+                    <div class="info-box-title">上证指数</div>
+                    <div class="info-box-value highlight-down">3813.28 <small>(-3.63%)</small></div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">深证成指</div>
+                    <div class="info-box-value highlight-down">13345.51 <small>(-3.76%)</small></div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">杀跌原因</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:4px">中东地缘风险 + 大摩降评记忆体 + AI/电子全线重挫</div>
+                </div>
+            </div>
+            <div style="margin-top:12px; font-size:0.88em; color:var(--text-secondary)">
+                <strong style="color:var(--accent-red)">13只股票12只下跌</strong>，仅中国巨石逆势+3.44%。所有股票跌破短期均线（MA5/MA10/MA20），技术面平均得分仅8.2/20。
+            </div>
+        </div>
+        <!-- 核心特征对比 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📋</span> 十三股核心特征速览（3月23日）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>股票</th>
+                        <th>竹石性格标签</th>
+                        <th>3/23表现</th>
+                        <th>PE(TTM)</th>
+                        <th>最大优势</th>
+                        <th>最大风险</th>
+                        <th>风险等级</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>中国巨石</strong></td>
+                        <td><span class="tag tag-gold">资源周期</span>+<span class="tag tag-blue">叙事波段</span></td>
+                        <td class="highlight-up">+3.44%</td>
+                        <td>28.5x</td>
+                        <td>基本面22/25全场最高 · 逆势上涨</td>
+                        <td>估值合理区间</td>
+                        <td><span class="tag tag-blue">⚠️中</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>兆易创新</strong></td>
+                        <td><span class="tag tag-purple">高弹性黑马</span>+<span class="tag tag-blue">叙事波段</span></td>
+                        <td class="highlight-down">-1.32%</td>
+                        <td>139x</td>
+                        <td>Q1净利+523% · 3月+25.4%最强</td>
+                        <td>存储周期见顶+PE压缩</td>
+                        <td><span class="tag tag-red">⚠️高</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>北方华创</strong></td>
+                        <td><span class="tag tag-green">高确定性白马</span></td>
+                        <td class="highlight-down">-3.71%</td>
+                        <td>114x</td>
+                        <td>全平台设备龙头 · 820亿在手订单</td>
+                        <td>零部件进口依赖</td>
+                        <td><span class="tag tag-blue">⚠️中</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>东山精密</strong></td>
+                        <td><span class="tag tag-green">白马</span>+<span class="tag tag-blue">叙事</span></td>
+                        <td class="highlight-down">-9.33%</td>
+                        <td>133x</td>
+                        <td>PCB+光模块双龙头 · Q1+143%</td>
+                        <td>当日暴跌 · 商誉47.69亿</td>
+                        <td><span class="tag tag-red">⚠️高</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>雅克科技</strong></td>
+                        <td><span class="tag tag-blue">叙事波段</span>+<span class="tag tag-purple">高弹性黑马</span></td>
+                        <td class="highlight-down">-3.05%</td>
+                        <td>90x</td>
+                        <td>HBM前驱体独家供应SK海力士</td>
+                        <td>Q1营收负增</td>
+                        <td><span class="tag tag-gold">⚠️中高</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><strong>云南锗业</strong></td>
+                        <td><span class="tag tag-blue">叙事波段</span>+<span class="tag tag-gold">资源周期</span></td>
+                        <td class="highlight-down">-6.58%</td>
+                        <td>634x</td>
+                        <td>国内唯一锗全产业链 · 龙虎榜+7.09亿</td>
+                        <td>增收不增利 · PE极度泡沫</td>
+                        <td><span class="tag tag-red">⚠️极高</span></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><strong>宏和科技</strong></td>
+                        <td><span class="tag tag-blue">叙事波段</span>+<span class="tag tag-purple">高弹性黑马</span></td>
+                        <td class="highlight-down">-5.19%</td>
+                        <td>347x</td>
+                        <td>4μm极薄布全球唯一 · 3月+63.1%</td>
+                        <td>PE 347x极度泡沫</td>
+                        <td><span class="tag tag-red">⚠️高</span></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><strong>长电科技</strong></td>
+                        <td><span class="tag tag-green">高确定性白马</span>+<span class="tag tag-blue">叙事波段</span></td>
+                        <td class="highlight-down">-3.47%</td>
+                        <td>102x</td>
+                        <td>全球OSAT第三 · 先进封装全栈</td>
+                        <td>3月仅涨+8.28%最弱</td>
+                        <td><span class="tag tag-gold">⚠️中高</span></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><strong>德明利</strong></td>
+                        <td><span class="tag tag-gold">资源周期</span>+<span class="tag tag-purple">高弹性黑马</span></td>
+                        <td class="highlight-down">-3.18%</td>
+                        <td>104x</td>
+                        <td>存储模组Q1+4943% · 自研主控</td>
+                        <td>存货122亿 · 现金流-2.41亿</td>
+                        <td><span class="tag tag-gold">⚠️中高</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><strong>中科曙光</strong></td>
+                        <td><span class="tag tag-green">白马(弱)</span></td>
+                        <td class="highlight-down">-2.95%</td>
+                        <td>58x</td>
+                        <td>国产算力全栈 · 海光股权</td>
+                        <td>3月-11%领跌 · 现金流承压</td>
+                        <td><span class="tag tag-gold">⚠️中高</span></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><strong>有研新材</strong></td>
+                        <td><span class="tag tag-blue">叙事波段</span>+<span class="tag tag-purple">高弹性黑马</span></td>
+                        <td class="highlight-down">-7.46%</td>
+                        <td>58x</td>
+                        <td>12寸钴靶国内独家 · 大基金增资</td>
+                        <td>5日暴跌16% · 技术面崩塌</td>
+                        <td><span class="tag tag-red">⚠️高</span></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><strong>利通电子</strong></td>
+                        <td><span class="tag tag-purple">高弹性黑马</span>+<span class="tag tag-blue">叙事</span></td>
+                        <td class="highlight-down">-6.11%</td>
+                        <td>36.5x</td>
+                        <td>算力Q1+821% · 腾讯50亿长协</td>
+                        <td>3月翻倍+118%已透支</td>
+                        <td><span class="tag tag-red">⚠️高</span></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><strong>黄河旋风</strong></td>
+                        <td><span class="tag tag-blue">叙事波段</span>+<span class="tag tag-gold">资源周期</span></td>
+                        <td class="highlight-down">-2.35%</td>
+                        <td>亏损</td>
+                        <td>国内唯一8寸CVD金刚石量产线</td>
+                        <td>连续亏27亿 · 负债率92.78%</td>
+                        <td><span class="tag tag-red">⚠️极高</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 五维维度对比 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📊</span> 五维维度得分率对比（3月23日）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>基本面<br><small>25分</small></th><th>技术面<br><small>20分</small></th><th>市场前景<br><small>20分</small></th><th>板块热度<br><small>15分</small></th><th>稀缺性<br><small>20分</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>中国巨石</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:88%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">88%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:70%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">70%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:85%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">85%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:73%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">73%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:80%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">80%</div></div></td></tr>
+                    <tr><td><strong>兆易创新</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:88%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">88%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:50%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">50%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:100%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">100%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:67%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">67%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:85%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">85%</div></div></td></tr>
+                    <tr><td><strong>北方华创</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:80%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">80%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">40%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:100%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">100%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:53%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">53%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td></tr>
+                    <tr><td><strong>东山精密</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:72%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">72%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:50%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">50%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:67%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">67%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:75%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">75%</div></div></td></tr>
+                    <tr><td><strong>雅克科技</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:64%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">64%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">40%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:60%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">60%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td></tr>
+                    <tr><td><strong>云南锗业</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:32%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">32%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:45%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">45%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:100%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">100%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:87%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">87%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:100%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">100%</div></div></td></tr>
+                    <tr><td><strong>宏和科技</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:56%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">56%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:35%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">35%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:67%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">67%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:90%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">90%</div></div></td></tr>
+                    <tr><td><strong>长电科技</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:48%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">48%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:35%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">35%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:100%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">100%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:53%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">53%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td></tr>
+                    <tr><td><strong>德明利</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:64%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">64%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:45%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">45%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:90%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">90%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:47%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">47%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:75%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">75%</div></div></td></tr>
+                    <tr><td><strong>中科曙光</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:60%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">60%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:30%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">30%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:90%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">90%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:53%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">53%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:85%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">85%</div></div></td></tr>
+                    <tr><td><strong>有研新材</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">40%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:25%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">25%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:95%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">95%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:67%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">67%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:90%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">90%</div></div></td></tr>
+                    <tr><td><strong>利通电子</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:56%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">56%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">40%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:80%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">80%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:53%;background:var(--accent-gold)"></div></div><div class="score-bar-val" style="color:var(--accent-gold)">53%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:70%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">70%</div></div></td></tr>
+                    <tr><td><strong>黄河旋风</strong></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:12%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">12%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:25%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">25%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:70%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">70%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:47%;background:var(--accent-red)"></div></div><div class="score-bar-val" style="color:var(--accent-red)">47%</div></div></td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:85%;background:var(--accent-green)"></div></div><div class="score-bar-val" style="color:var(--accent-green)">85%</div></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- ==================== 半导体组 ==================== -->
+    <div id="semi" class="section">
+        <div class="group-header">
+            <div class="group-icon group-icon-semi">💎</div>
+            <div>
+                <h2 style="font-size:1.4em">半导体组详细分析</h2>
+                <div style="color:var(--text-secondary); font-size:0.9em">兆易创新 · 北方华创 · 雅克科技 · 长电科技 · 中科曙光</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📊 半导体组评分对比（3月23日）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>排名</th><th>股票</th><th>基本面(25)</th><th>技术面(20)</th><th>市场前景(20)</th><th>板块热度(15)</th><th>稀缺性(20)</th><th>总分(100)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>🥇</td><td><strong>兆易创新</strong></td><td>22</td><td>10</td><td>20</td><td>10</td><td>17</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">79</td></tr>
+                    <tr><td>🥈</td><td><strong>北方华创</strong></td><td>20</td><td>8</td><td>20</td><td>8</td><td>19</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">75</td></tr>
+                    <tr><td>🥉</td><td><strong>雅克科技</strong></td><td>16</td><td>8</td><td>19</td><td>9</td><td>19</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">71</td></tr>
+                    <tr><td>4</td><td><strong>长电科技</strong></td><td>12</td><td>7</td><td>20</td><td>8</td><td>19</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">66</td></tr>
+                    <tr><td>5</td><td><strong>中科曙光</strong></td><td>15</td><td>6</td><td>18</td><td>8</td><td>17</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">64</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <div class="card-title">📈 半导体组3月23日行情</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>股票</th><th>3/23收盘</th><th>当日涨跌</th><th>3月涨幅</th><th>PE</th><th>总分</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>兆易创新</strong></td><td>272.6</td><td class="highlight-down">-1.32%</td><td>+25.4%</td><td>139x</td><td style="font-weight:700;color:var(--accent-green)">79</td></tr>
+                    <tr><td><strong>北方华创</strong></td><td>443.63</td><td class="highlight-down">-3.71%</td><td>-1.42%</td><td>114x</td><td style="font-weight:700;color:var(--accent-green)">75</td></tr>
+                    <tr><td><strong>雅克科技</strong></td><td>78.24</td><td class="highlight-down">-3.05%</td><td>+5.73%</td><td>90x</td><td style="font-weight:700;color:var(--accent-green)">71</td></tr>
+                    <tr><td><strong>长电科技</strong></td><td>38.98</td><td class="highlight-down">-3.47%</td><td>+8.28%</td><td>102x</td><td style="font-weight:700;color:var(--accent-gold)">66</td></tr>
+                    <tr><td><strong>中科曙光</strong></td><td>79.2</td><td class="highlight-down">-2.95%</td><td>-11.0%</td><td>58x</td><td style="font-weight:700;color:var(--accent-gold)">64</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="background:rgba(88,166,255,0.05); border-color:rgba(88,166,255,0.2)">
+            <div class="card-title" style="color:var(--accent-blue)">💡 板块特征</div>
+            <div style="color:var(--text-secondary); font-size:0.9em; line-height:1.7">5股全线收跌，申万半导体指数近两周-5.51%。兆易创新3月+25.4%最强（存储涨价），中科曙光-11%最弱（算力调整）。估值均远超行业中枢。</div>
+        </div>
+        <!-- 兆易创新 -->
+        <div class="stock-detail" id="兆易创新">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥇 兆易创新（603986）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">存储芯片/MCU · 3/23 -1.32% · PE 139x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-purple">高弹性黑马</span><span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-gold">存储涨价周期</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">79<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B+级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1营收增速</div>
+                    <div class="info-box-value highlight-up">+119.38%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利增速</div>
+                    <div class="info-box-value highlight-up">+522.79%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">毛利率</div>
+                    <div class="info-box-value highlight-up">57.08%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">~139x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>3月最强半导体标的（+25.4%），DRAM供需比降至7%+利基型DRAM量价齐升驱动。高盛/华创/太平洋证券密集"买入"评级。基本面22/25全场最高之一，但技术面仅10/20反映系统性杀跌冲击。5股全线收跌，兆易创新相对跌幅最小（-1.32%），资金面韧性最强。存储涨价周期仍在延续，短期上涨概率50%/下跌概率50%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>存储芯片强周期属性，涨价见顶后业绩弹性可能迅速消失</li>
+                    <li>PE(TTM)超139倍，估值极度泡沫</li>
+                    <li>创始人朱一明年内累计套现超41亿元</li>
+                    <li>7成营收依赖存储，周期下行利润大幅缩水</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 北方华创 -->
+        <div class="stock-detail" id="北方华创">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥈 北方华创（002371）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">半导体设备 · 3/23 -3.71% · PE 114x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-green">高确定性白马</span><span class="tag tag-blue">全平台设备龙头</span><span class="tag tag-purple">820亿在手订单</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">75<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B+级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1营收</div>
+                    <div class="info-box-value highlight-up">103.23亿 (+25.8%)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利</div>
+                    <div class="info-box-value highlight-up">16.35亿 (+3.42%)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">在手订单</div>
+                    <div class="info-box-value ">820-900亿</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">刻蚀国产化率</div>
+                    <div class="info-box-value highlight-up">>65%</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>国内半导体设备绝对龙头，在手订单820-900亿锁定2年收入可见性。3月23日-3.71%随板块回调，但基本面20/25依然强劲。国产替代率突破35%加速临界点，但104倍PE已部分透支。技术面仅8/20反映系统性杀跌影响，跌破短期均线。短期上涨概率45%/下跌概率55%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>高端零部件进口依赖，出口管制收紧可能冲击交付</li>
+                    <li>PE 104倍估值消化需要持续高增长</li>
+                    <li>并购芯源微后整合效果需验证</li>
+                    <li>大基金持仓锁仓是双刃剑，集中减仓杀伤力大</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 雅克科技 -->
+        <div class="stock-detail" id="雅克科技">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥉 雅克科技（002409）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">半导体材料 · 3/23 -3.05% · PE 90x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-purple">高弹性黑马</span><span class="tag tag-gold">HBM前驱体独家</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">71<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B+级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">HBM前驱体</div>
+                    <div class="info-box-value highlight-up">SK海力士独家</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1营收增速</div>
+                    <div class="info-box-value ">-6.85%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">长鑫绑定</div>
+                    <div class="info-box-value highlight-up">深度合作</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">90x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>HBM前驱体赛道稀缺标的，SK海力士HBM4独家供应商+长鑫深度绑定，稀缺性19/20。3月23日-3.05%随板块调整，但71分与7月9日持平（变化0），逻辑最稳定。基本面16/25中等偏上，Q1营收负增长是隐忧。5股全线收跌中跌幅相对较小，防御性优于长电科技和中科曙光。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>Q1营收负增长-6.85%，业绩与股价背离</li>
+                    <li>SK海力士营收占比超50%，客户集中度极高</li>
+                    <li>机构目标均价远低于现价</li>
+                    <li>10日主力净流出，资金面承压</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 长电科技 -->
+        <div class="stock-detail" id="长电科技">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">4️⃣ 长电科技（600584）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">半导体封测 · 3/23 -3.47% · PE 102x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-green">高确定性白马</span><span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-purple">全球OSAT第三</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">66<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">2025营收</div>
+                    <div class="info-box-value highlight-up">388.71亿 (+8.09%)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利增速</div>
+                    <div class="info-box-value highlight-up">+42.74%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">全球OSAT市占</div>
+                    <div class="info-box-value highlight-up">12.2% (第三)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">先进封装占比</div>
+                    <div class="info-box-value highlight-up">75%</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>全球第三/国内第一半导体封测龙头，国内唯一HBM+2.5D/3D+Chiplet+CPO全栈量产。3月仅涨+8.28%为半导体组最弱，技术面7/20极弱。66分远低于7月9日的75分（-9），主要受技术面拖累。5股全线收跌中跌幅居中，稀缺性19/20依然强劲。短期上涨概率40%/下跌概率60%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>技术面极弱，3月涨幅仅+8.28%为半导体组最弱</li>
+                    <li>PE 102倍估值偏高</li>
+                    <li>综合毛利率仅14.55%，净利率3.04%</li>
+                    <li>海外收入占比70%+，地缘贸易摩擦风险</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 中科曙光 -->
+        <div class="stock-detail" id="中科曙光">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">5️⃣ 中科曙光（603019）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">算力/服务器 · 3/23 -2.95% · PE 58x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-green">高确定性白马(弱)</span><span class="tag tag-blue">国产算力国家队</span><span class="tag tag-purple">海光股权27.96%</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">64<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1扣非净利</div>
+                    <div class="info-box-value highlight-up">+53.3%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">3月涨幅</div>
+                    <div class="info-box-value ">-11.0%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">毛利率</div>
+                    <div class="info-box-value ">26.56%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">58x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>国产算力全栈龙头，中科院背景+海光股权+液冷技术构成核心壁垒。3月-11.0%为13股跌幅最大，跌破MA120，技术面6/20全场最低。64分远低于7月9日的74分（-10），算力调整期受冲击最大。Q1扣非净利+53.3%验证主业改善，但现金流承压。短期上涨概率35%/下跌概率65%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>3月-11%为13股跌幅最大，技术面严重破位</li>
+                    <li>Q1经营现金流-13.91亿，应收账款回款周期180天</li>
+                    <li>毛利率26.56%远低于半导体设计类公司</li>
+                    <li>营收基本依赖国内政企，海外拓展缓慢</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== 材料组 ==================== -->
+    <div id="material" class="section">
+        <div class="group-header">
+            <div class="group-icon group-icon-mat">🧱</div>
+            <div>
+                <h2 style="font-size:1.4em">材料组详细分析</h2>
+                <div style="color:var(--text-secondary); font-size:0.9em">中国巨石 · 云南锗业 · 宏和科技 · 有研新材</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📊 材料组评分对比（3月23日）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>排名</th><th>股票</th><th>基本面(25)</th><th>技术面(20)</th><th>市场前景(20)</th><th>板块热度(15)</th><th>稀缺性(20)</th><th>总分(100)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>🥇</td><td><strong>中国巨石</strong></td><td>22</td><td>14</td><td>17</td><td>11</td><td>16</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">80</td></tr>
+                    <tr><td>🥈</td><td><strong>云南锗业</strong></td><td>8</td><td>9</td><td>20</td><td>13</td><td>20</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">70</td></tr>
+                    <tr><td>🥉</td><td><strong>宏和科技</strong></td><td>14</td><td>7</td><td>19</td><td>10</td><td>18</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">68</td></tr>
+                    <tr><td>4</td><td><strong>有研新材</strong></td><td>10</td><td>5</td><td>19</td><td>10</td><td>18</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">62</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <div class="card-title">📈 材料组3月23日行情</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>股票</th><th>3/23收盘</th><th>当日涨跌</th><th>3月涨幅</th><th>PE</th><th>总分</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>中国巨石</strong></td><td>23.43</td><td class="highlight-up">+3.44%</td><td>+43.6%</td><td>28.5x</td><td style="font-weight:700;color:var(--accent-green)">80</td></tr>
+                    <tr><td><strong>云南锗业</strong></td><td>40.6</td><td class="highlight-down">-6.58%</td><td>+33.0%</td><td>634x</td><td style="font-weight:700;color:var(--accent-green)">70</td></tr>
+                    <tr><td><strong>宏和科技</strong></td><td>60.77</td><td class="highlight-down">-5.19%</td><td>+63.1%</td><td>347x</td><td style="font-weight:700;color:var(--accent-gold)">68</td></tr>
+                    <tr><td><strong>有研新材</strong></td><td>19.1</td><td class="highlight-down">-7.46%</td><td>-5.6%</td><td>58x</td><td style="font-weight:700;color:var(--accent-gold)">62</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="background:rgba(88,166,255,0.05); border-color:rgba(88,166,255,0.2)">
+            <div class="card-title" style="color:var(--accent-blue)">💡 板块特征</div>
+            <div style="color:var(--text-secondary); font-size:0.9em; line-height:1.7">仅中国巨石逆势上涨（年报+34%净利驱动）。宏和科技3月+63.1%涨幅最猛但PE 347倍。云南锗业龙虎榜净买入+7.09亿资金最强。</div>
+        </div>
+        <!-- 中国巨石 -->
+        <div class="stock-detail" id="中国巨石">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥇 中国巨石（600176） · 🏆 全场最高分</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">玻纤 · 3/23 +3.44% · PE 28.5x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-gold">资源周期型弹性股</span><span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-green">全球玻纤龙头</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">80<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · A级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1营收增速</div>
+                    <div class="info-box-value highlight-up">+17.93%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利增速</div>
+                    <div class="info-box-value highlight-up">+73.48%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">毛利率</div>
+                    <div class="info-box-value highlight-up">39.64% (9年新高)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">28.5x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>3月23日系统性杀跌日（上证-3.63%），中国巨石是13股中唯一逆势上涨（+3.44%）的标的，充分验证玻纤龙头的防御属性。基本面22/25全场最高，2025年报净利+34%，PE仅28.5x为13股最低估值。22家机构评级目标均价29.38元，主力净流入+1.39亿。在系统性风险下仍获资金逆势加仓，是当前最具防御性的持仓标的。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>2027年行业产能集中释放可能打破供需格局</li>
+                    <li>应收账款Q1暴增66%至31.43亿</li>
+                    <li>Low-DK特种布尚无量产订单</li>
+                    <li>电子布涨价持续性需Q2验证</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 云南锗业 -->
+        <div class="stock-detail" id="云南锗业">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥈 云南锗业（002428）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">锗/磷化铟 · 3/23 -6.58% · PE 634x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-gold">资源周期型弹性股</span><span class="tag tag-red">PE 634x 极度泡沫</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">70<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B+级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">磷化铟认证</div>
+                    <div class="info-box-value highlight-up">6英寸通过华为</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">锗全产业链</div>
+                    <div class="info-box-value highlight-up">国内唯一</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">龙虎榜</div>
+                    <div class="info-box-value highlight-up">净买入+7.09亿</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">634x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>国内唯一锗全产业链+磷化铟衬底国产替代标的，6英寸磷化铟通过华为认证是核心催化。3月23日虽-6.58%但龙虎榜净买入+7.09亿为13股资金最强，稀缺性满分(20/20)。基本面8/25极差，634倍PE全靠叙事支撑。70分高于7月9日的66分（+4），反映3月磷化铟涨价逻辑更强。短期上涨概率40%/下跌概率60%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>PE 634x估值极度泡沫</li>
+                    <li>基本面极差：Q1净利仅910万且同比下滑</li>
+                    <li>外购原料成本随锗价上涨侵蚀毛利</li>
+                    <li>负债率55.85%偏高</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 宏和科技 -->
+        <div class="stock-detail" id="宏和科技">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥉 宏和科技（603256）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">电子布 · 3/23 -5.19% · PE 347x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-purple">高弹性黑马</span><span class="tag tag-gold">4μm极薄布全球唯一</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">68<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利增速</div>
+                    <div class="info-box-value highlight-up">+354%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">毛利率</div>
+                    <div class="info-box-value highlight-up">55.65% (行业第一)</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">3月涨幅</div>
+                    <div class="info-box-value highlight-up">+63.1%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">347x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>电子布涨价+AI叙事驱动的牛股，3月+63.1%涨幅最猛。4μm极薄布全球唯一量产，技术壁垒极高。Q1净利+354%、毛利率55.65%行业第一。但3月23日-5.19%暴跌，PE 347x极度泡沫。68分远低于7月9日的76分（-8），技术面仅7/20受系统性杀跌重创。一致行动人减持进行中。短期上涨概率35%/下跌概率65%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>Q布终端验证未通过则估值逻辑完全证伪</li>
+                    <li>PE 347x估值泡沫极大</li>
+                    <li>一致行动人减持持续压制</li>
+                    <li>流通盘极小，波动剧烈</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 有研新材 -->
+        <div class="stock-detail" id="有研新材">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">4️⃣ 有研新材（600206）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">半导体靶材 · 3/23 -7.46% · PE 58x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-purple">高弹性黑马</span><span class="tag tag-red">5日暴跌16%</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">62<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">磷化铟</div>
+                    <div class="info-box-value highlight-up">国内领先</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">大基金二期</div>
+                    <div class="info-box-value highlight-up">3亿增资</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">5日跌幅</div>
+                    <div class="info-box-value ">-16%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">58x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>央企半导体靶材龙头，12英寸钴靶国内独家量产+铜靶市占60%。但3月17-23日连续5日暴跌约16%，技术面5/20全场最低（与黄河旋风并列），跌破所有短期均线。62分远低于7月9日的79分（-17），是13股中跌幅最大。稀缺性18/20依然强，但短期超卖严重。短期上涨概率30%/下跌概率70%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>5日暴跌16%，技术面完全崩塌</li>
+                    <li>Q1经营现金流-12.2亿，严重恶化</li>
+                    <li>扣非利润仅+4.75%，增收不增利</li>
+                    <li>整体毛利率6.42%极低（贸易业务稀释）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== 制造组 ==================== -->
+    <div id="manufacture" class="section">
+        <div class="group-header">
+            <div class="group-icon group-icon-mfg">⚙️</div>
+            <div>
+                <h2 style="font-size:1.4em">制造组详细分析</h2>
+                <div style="color:var(--text-secondary); font-size:0.9em">东山精密 · 德明利 · 利通电子 · 黄河旋风</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📊 制造组评分对比（3月23日）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>排名</th><th>股票</th><th>基本面(25)</th><th>技术面(20)</th><th>市场前景(20)</th><th>板块热度(15)</th><th>稀缺性(20)</th><th>总分(100)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>🥇</td><td><strong>东山精密</strong></td><td>18</td><td>10</td><td>19</td><td>10</td><td>15</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-green)">72</td></tr>
+                    <tr><td>🥈</td><td><strong>德明利</strong></td><td>16</td><td>9</td><td>18</td><td>7</td><td>15</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">65</td></tr>
+                    <tr><td>🥉</td><td><strong>利通电子</strong></td><td>14</td><td>8</td><td>16</td><td>8</td><td>14</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-gold)">60</td></tr>
+                    <tr><td>4</td><td><strong>黄河旋风</strong></td><td>3</td><td>5</td><td>14</td><td>7</td><td>17</td><td style="font-size:1.2em;font-weight:800;color:var(--accent-red)">46</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <div class="card-title">📈 制造组3月23日行情</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>股票</th><th>3/23收盘</th><th>当日涨跌</th><th>3月涨幅</th><th>PE</th><th>总分</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>东山精密</strong></td><td>105.23</td><td class="highlight-down">-9.33%</td><td>+29.42%</td><td>133x</td><td style="font-weight:700;color:var(--accent-green)">72</td></tr>
+                    <tr><td><strong>德明利</strong></td><td>320.6</td><td class="highlight-down">-3.18%</td><td>+58.63%</td><td>104x</td><td style="font-weight:700;color:var(--accent-gold)">65</td></tr>
+                    <tr><td><strong>利通电子</strong></td><td>40.9</td><td class="highlight-down">-6.11%</td><td>+118%</td><td>36.5x</td><td style="font-weight:700;color:var(--accent-gold)">60</td></tr>
+                    <tr><td><strong>黄河旋风</strong></td><td>7.9</td><td class="highlight-down">-2.35%</td><td>+31.23%</td><td>亏损</td><td style="font-weight:700;color:var(--accent-red)">46</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="background:rgba(88,166,255,0.05); border-color:rgba(88,166,255,0.2)">
+            <div class="card-title" style="color:var(--accent-blue)">💡 板块特征</div>
+            <div style="color:var(--text-secondary); font-size:0.9em; line-height:1.7">PCB/存储/散热板块全线重挫（-4%~-7%）。利通电子3月翻倍+118%但估值已透支。黄河旋风基本面最差（亏损9.5亿、负债率92.78%）。</div>
+        </div>
+        <!-- 东山精密 -->
+        <div class="stock-detail" id="东山精密">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥇 东山精密（002384）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">PCB/FPC/光模块 · 3/23 -9.33% · PE 133x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-green">高确定性白马</span><span class="tag tag-blue">叙事驱动</span><span class="tag tag-red">当日暴跌-9.33%</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-green)">72<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B+级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1营收增速</div>
+                    <div class="info-box-value highlight-up">+46.17%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Q1净利增速</div>
+                    <div class="info-box-value highlight-up">+143.47%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">光模块毛利率</div>
+                    <div class="info-box-value highlight-up">36.74%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">133x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>3月23日遭遇-9.33%暴跌，是13股中跌幅第二大（仅次于有研新材-7.46%），技术面严重受挫。PCB+光模块双龙头基本面18/25优秀，Q1净利+143.47%爆发力强。但板块热度仅10/15（原15/15满分），AI基建板块全线重挫拖累。商誉47.69亿灰犀牛+短期债务121亿。短期上涨概率35%/下跌概率65%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>当日暴跌-9.33%，技术面严重破位</li>
+                    <li>PE 133倍，估值极度泡沫</li>
+                    <li>商誉47.69亿（索尔思光电），光模块景气下行面临减值</li>
+                    <li>北美云厂商订单占比高，地缘政治风险</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 德明利 -->
+        <div class="stock-detail" id="德明利">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥈 德明利（001309）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">存储模组 · 3/23 -3.18% · PE 104x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-gold">资源周期型弹性股</span><span class="tag tag-purple">高弹性黑马</span><span class="tag tag-green">Q1归母+4943%</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">65<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1归母增速</div>
+                    <div class="info-box-value highlight-up">+4943%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">3月涨幅</div>
+                    <div class="info-box-value highlight-up">+58.63%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">存货</div>
+                    <div class="info-box-value ">121.92亿</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">104x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>存储模组国产龙头，Q1归母+4943%源于NAND/DRAM涨价周期+AI存储需求。3月+58.63%涨幅强劲但3/23随板块回调-3.18%。65分低于7月9日的70分（-5），存储板块-4%~-7%拖累。核心矛盾：利润与现金流严重背离，存货121.92亿减值炸弹。短期上涨概率40%/下跌概率60%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>2027E利润-18%，周期见顶预期</li>
+                    <li>存货121.92亿占资产66.32%，减值风险巨大</li>
+                    <li>经营现金流-2.41亿 vs 净利润33.46亿，利润质量存疑</li>
+                    <li>融资余额占流通市值8.66%，去杠杆风险</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 利通电子 -->
+        <div class="stock-detail" id="利通电子">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">🥉 利通电子（603629）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">算力租赁 · 3/23 -6.11% · PE 36.5x</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-purple">高弹性黑马</span><span class="tag tag-blue">叙事驱动</span><span class="tag tag-gold">3月翻倍+118%</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-gold)">60<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · B级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">Q1归母增速</div>
+                    <div class="info-box-value highlight-up">+821%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">3月涨幅</div>
+                    <div class="info-box-value highlight-up">+118%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">资产负债率</div>
+                    <div class="info-box-value ">75.10%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">PE(TTM)</div>
+                    <div class="info-box-value ">36.5x</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>算力租赁高弹性标的，3月翻倍+118%为13股涨幅最大。Q1归母+821%爆发力极强，英伟达金级合作+腾讯50亿长协。但3/23当日-6.11%随板块重挫，60分远低于7月9日的71.5分（-11.5）。估值已透支预期，板块热度仅8/15。短期上涨概率35%/下跌概率65%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>3月涨幅+118%已充分透支预期</li>
+                    <li>当日-6.11%，波动剧烈</li>
+                    <li>资产负债率75.10%，杠杆高</li>
+                    <li>10日主力净流出，北向减仓</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 黄河旋风 -->
+        <div class="stock-detail" id="黄河旋风">
+            <div class="stock-header">
+                <div>
+                    <div class="stock-title">4️⃣ 黄河旋风（600172）</div>
+                    <div style="color:var(--text-secondary); margin-top:4px">超硬材料/AI散热 · 3/23 -2.35% · 亏损</div>
+                    <div style="margin-top:8px">
+                        <span class="tag tag-blue">叙事驱动型波段股</span><span class="tag tag-gold">资源周期</span><span class="tag tag-red">连续3年亏损</span>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div class="stock-total-score" style="color:var(--accent-red)">46<span style="font-size:0.4em;color:var(--text-muted)">/100</span></div>
+                    <div class="stock-total-label">五维总分 · D级</div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:16px">
+                <div class="info-box">
+                    <div class="info-box-title">FY2025亏损</div>
+                    <div class="info-box-value ">9.50亿</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">负债率</div>
+                    <div class="info-box-value ">92.78%</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">在手订单</div>
+                    <div class="info-box-value ">1.5亿</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">换手率</div>
+                    <div class="info-box-value ">21.12%</div>
+                </div>
+            </div>
+            <div class="conclusion-box">
+                <h4>🎯 核心结论</h4>
+                <p>AI散热+培育钻石双重叙事标的，国内唯一8英寸CVD金刚石热沉片量产线。3月23日-2.35%跌幅相对较小（13股中跌幅最小），但基本面3/25全场最差。46分远低于7月9日的60.5分（-14.5），连续亏损9.5亿+负债率92.78%，净资产仅5.2亿。纯题材驱动，机构普遍回避。短期上涨概率30%/下跌概率70%。</p>
+            </div>
+            <div class="risk-box">
+                <h4>⚠️ 关键风险</h4>
+                <ul>
+                    <li>连续3年亏超27亿，2025年亏损9.50亿</li>
+                    <li>资产负债率92.78%，资不抵债边缘</li>
+                    <li>在手订单1.5亿 vs 市值极度不符</li>
+                    <li>换手21.12%+龙虎榜频繁，游资主导波动剧烈</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== 3/23 vs 7/9 对比 ==================== -->
+    <div id="compare" class="section">
+        <div class="group-header">
+            <div class="group-icon" style="background:rgba(188,140,255,0.15)">🔄</div>
+            <div>
+                <h2 style="font-size:1.4em">3月23日 vs 7月9日 评分对比</h2>
+                <div style="color:var(--text-secondary); font-size:0.9em">复盘分析：3个月间评分变化及原因</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><span class="icon">📊</span> 评分变化总览</div>
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>3/23总分</th>
+                        <th>7/9总分</th>
+                        <th>变化</th>
+                        <th>变化幅度</th>
+                        <th>关键变化原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>中国巨石</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">80</td>
+                        <td style="font-weight:700; color:var(--accent-green)">81</td>
+                        <td><span class="highlight-down">🔻 -1</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:5.88235294117647%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-1</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">稳定榜首，3月23日唯一逆势上涨</td>
+                    </tr>
+                    <tr>
+                        <td><strong>兆易创新</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">79</td>
+                        <td style="font-weight:700; color:var(--accent-green)">75</td>
+                        <td><span class="highlight-up">🔺 +4</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-green); height:20px; border-radius:4px; width:23.52941176470588%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700">+4</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">存储涨价周期支撑，3月仍涨+25.4%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>北方华创</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">75</td>
+                        <td style="font-weight:700; color:var(--accent-green)">78</td>
+                        <td><span class="highlight-down">🔻 -3</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:17.647058823529413%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-3</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">技术面回调，但基本面强劲</td>
+                    </tr>
+                    <tr>
+                        <td><strong>东山精密</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">72</td>
+                        <td style="font-weight:700; color:var(--accent-green)">78.5</td>
+                        <td><span class="highlight-down">🔻 -6.5</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:38.23529411764706%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-6.5</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">当日暴跌-9.33%拖累技术面</td>
+                    </tr>
+                    <tr>
+                        <td><strong>雅克科技</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">71</td>
+                        <td style="font-weight:700; color:var(--accent-green)">71</td>
+                        <td><span style="color:var(--text-muted)">➖ 0</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--text-muted); height:20px; border-radius:4px; width:10px; display:flex; align-items:center; justify-content:center; font-size:0.75em">0</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">基本持平，HBM前驱体逻辑稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>云南锗业</strong></td>
+                        <td style="font-weight:700; color:var(--accent-green)">70</td>
+                        <td style="font-weight:700; color:var(--accent-gold)">66</td>
+                        <td><span class="highlight-up">🔺 +4</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-green); height:20px; border-radius:4px; width:23.52941176470588%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700">+4</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">磷化铟涨价逻辑强，资金抢筹+7.09亿</td>
+                    </tr>
+                    <tr>
+                        <td><strong>宏和科技</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">68</td>
+                        <td style="font-weight:700; color:var(--accent-green)">76</td>
+                        <td><span class="highlight-down">🔻 -8</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:47.05882352941176%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-8</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">当日暴跌-5.19%，PE高达347倍</td>
+                    </tr>
+                    <tr>
+                        <td><strong>长电科技</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">66</td>
+                        <td style="font-weight:700; color:var(--accent-green)">75</td>
+                        <td><span class="highlight-down">🔻 -9</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:52.94117647058824%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-9</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">3月仅涨+8.28%，技术面最弱</td>
+                    </tr>
+                    <tr>
+                        <td><strong>德明利</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">65</td>
+                        <td style="font-weight:700; color:var(--accent-green)">70</td>
+                        <td><span class="highlight-down">🔻 -5</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:29.411764705882355%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-5</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">存储板块-4%~-7%拖累</td>
+                    </tr>
+                    <tr>
+                        <td><strong>中科曙光</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">64</td>
+                        <td style="font-weight:700; color:var(--accent-green)">74</td>
+                        <td><span class="highlight-down">🔻 -10</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:58.82352941176471%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-10</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">3月-11%领跌，跌破MA120</td>
+                    </tr>
+                    <tr>
+                        <td><strong>有研新材</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">62</td>
+                        <td style="font-weight:700; color:var(--accent-green)">79</td>
+                        <td><span class="highlight-down">🔻 -17</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:100.0%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-17</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">5日暴跌16%，技术面崩塌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>利通电子</strong></td>
+                        <td style="font-weight:700; color:var(--accent-gold)">60</td>
+                        <td style="font-weight:700; color:var(--accent-green)">71.5</td>
+                        <td><span class="highlight-down">🔻 -11.5</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:67.64705882352942%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-11.5</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">虽3月翻倍+118%，但当日-6.11%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>黄河旋风</strong></td>
+                        <td style="font-weight:700; color:var(--accent-red)">46</td>
+                        <td style="font-weight:700; color:var(--accent-gold)">60.5</td>
+                        <td><span class="highlight-down">🔻 -14.5</span></td>
+                        <td><div style="width:100%; background:var(--bg-hover); border-radius:4px; overflow:hidden"><div style="background:var(--accent-red); height:20px; border-radius:4px; width:85.29411764705883%; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.75em; font-weight:700; color:#fff">-14.5</div></div></td>
+                        <td style="text-align:left; font-size:0.85em; color:var(--text-secondary)">连续亏损9.5亿，负债率92.78%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 关键发现 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🔍</span> 关键发现</div>
+            <div class="grid-2">
+                <div class="info-box" style="border-color:rgba(63,185,80,0.3)">
+                    <div class="info-box-title" style="color:var(--accent-green)">📈 评分上升标的</div>
+                    <div style="font-size:0.88em; color:var(--text-secondary); margin-top:8px">
+                        <div style="margin-bottom:8px">🔺 <strong>兆易创新</strong> +4分（79→75）：存储涨价周期支撑，3月仍涨+25.4%</div>
+                        <div>🔺 <strong>云南锗业</strong> +4分（70→66）：磷化铟涨价逻辑强，资金抢筹+7.09亿</div>
+                    </div>
+                </div>
+                <div class="info-box" style="border-color:rgba(248,81,73,0.3)">
+                    <div class="info-box-title" style="color:var(--accent-red)">📉 评分大幅下降标的</div>
+                    <div style="font-size:0.88em; color:var(--text-secondary); margin-top:8px">
+                        <div style="margin-bottom:8px">🔻 <strong>有研新材</strong> -17分（62→79）：5日暴跌16%，技术面崩塌</div>
+                        <div style="margin-bottom:8px">🔻 <strong>黄河旋风</strong> -14.5分（46→60.5）：连续亏损+高负债</div>
+                        <div>🔻 <strong>利通电子</strong> -11.5分（60→71.5）：虽3月翻倍但当日-6.11%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><span class="icon">💡</span> 复盘结论</div>
+            <div style="color:var(--text-secondary); font-size:0.9em; line-height:1.8">
+                <p style="margin-bottom:12px"><strong style="color:var(--accent-gold)">1. 3月23日是系统性杀跌日</strong>：上证-3.63%，13只股票12只下跌，仅中国巨石逆势+3.44%。所有股票跌破短期均线，技术面平均得分仅8.2/20。</p>
+                <p style="margin-bottom:12px"><strong style="color:var(--accent-gold)">2. 中国巨石蝉联榜首</strong>：PE仅28.5x（13股最低），2025年报净利+34%，当日唯一上涨，主力净流入+1.39亿。</p>
+                <p style="margin-bottom:12px"><strong style="color:var(--accent-gold)">3. 兆易创新3月最强</strong>：3月+25.4%为13股中涨幅第二（仅次于利通电子+118%），DRAM供需比降至7%驱动。</p>
+                <p style="margin-bottom:12px"><strong style="color:var(--accent-gold)">4. 有研新材跌幅最大（-17分）</strong>：3月17-23日连续5日暴跌约16%，跌破所有短期均线。</p>
+                <p><strong style="color:var(--accent-gold)">5. 黄河旋风基本面最差</strong>：FY2025亏损9.50亿，负债率92.78%，毛利率仅0.9%，纯题材驱动。</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== 评分框架 ==================== -->
+    <div id="framework" class="section">
+        <div class="card">
+            <div class="card-title"><span class="icon">🏆</span>谁是牛中牛争霸赛</div>
+            <div class="grid-2">
+                <div class="info-box">
+                    <div class="info-box-title">维度一：基本面（25分）</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        营收增速(4) · 净利润增速(4) · 毛利率/净利率(3) · 净利率(2) · ROE(3) · 资产负债率(2) · 经营现金流(2) · PE/PB/PEG(5)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">维度二：技术面（20分）</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        均线系统(3) · 量价配合(3) · MACD/KDJ(3) · 支撑压力位(3) · 换手率(2) · 主力净流入(3) · 筹码集中度(3)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">维度三：市场前景（20分）</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        行业增速(4) · 政策支持(3) · 市场空间(3) · 国产替代空间(4) · 业绩确定性(3) · 下游需求景气度(3)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">维度四：板块热度（15分）</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        板块涨跌排名(3) · 板块资金流向(3) · 涨停梯队位置(3) · 龙虎榜(2) · 融资融券(2) · 北向资金(2)
+                    </div>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top:12px">
+                <div class="info-box-title">维度五：稀缺性（20分）</div>
+                <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                    行业唯一性(4) · 技术壁垒(4) · 资源垄断性(3) · 客户绑定度(3) · 产能稀缺性(3) · 概念叠加度(3)
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><span class="icon">📊</span> 评分等级体系（3月23日版）</div>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>等级</th><th>分数区间</th><th>含义</th><th>对应标的</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="tag tag-green">A+</span></td><td>90-100</td><td>卓越标的，各维度均优秀</td><td>无</td></tr>
+                    <tr><td><span class="tag tag-green">A</span></td><td>80-89</td><td>优秀标的，多维度突出</td><td>中国巨石(80)</td></tr>
+                    <tr><td><span class="tag tag-blue">B+</span></td><td>70-79</td><td>良好标的，有明确优势</td><td>兆易创新(79) · 北方华创(75) · 东山精密(72) · 雅克科技(71) · 云南锗业(70)</td></tr>
+                    <tr><td><span class="tag tag-gold">B</span></td><td>60-69</td><td>中等标的，优劣并存</td><td>宏和科技(68) · 长电科技(66) · 德明利(65) · 中科曙光(64) · 有研新材(62) · 利通电子(60)</td></tr>
+                    <tr><td><span class="tag tag-red">C</span></td><td>50-59</td><td>偏弱标的，风险较高</td><td>无</td></tr>
+                    <tr><td><span class="tag tag-red">D</span></td><td>&lt;50</td><td>高风险标的</td><td>黄河旋风(46)</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><span class="icon">🧬</span> 竹石性格标签体系</div>
+            <div class="grid-2">
+                <div class="info-box">
+                    <div class="info-box-title">高确定性白马</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        主业清晰、行业地位领先、业绩持续兑现、估值合理。<br>代表：北方华创(75分)、中国巨石(80分)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">高弹性黑马</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        新业务改变估值逻辑、业绩拐点明确、弹性巨大。<br>代表：兆易创新(79分)、雅克科技(71分)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">叙事驱动型波段股</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        股价先于业绩验证，概念催化驱动，博弈资金主导。<br>代表：云南锗业(70分)、宏和科技(68分)、黄河旋风(46分)
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">资源周期型弹性股</div>
+                    <div style="font-size:0.85em; color:var(--text-secondary); margin-top:8px">
+                        利润高度受资源价格影响，价格变动显著影响利润。<br>代表：中国巨石(80分)、德明利(65分)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <strong>⚠️ 免责声明</strong><br>
+        本报告基于2026年3月23日收盘数据的公开搜索数据整理分析，所有数据均标注来源，不保证完整性和准确性。所有评分和分析结论仅供复盘参考，不构成任何投资建议或收益承诺。股市有风险，投资需谨慎。所有梯队股票数据均基于搜索结果，严禁臆测。涨停、连板、龙虎榜、资金流等数据必须以最新交易所、行情软件和权威公开信息为准。如果后续出现核心催化证伪、板块退潮、技术破位、资金流出或公司风险公告，原分析结论需要重新评估。<br><br>
+        <strong>数据来源</strong>：腾讯自选股、东方财富、证券之星、新浪财经、雪球、和讯网、财联社、券商研报等公开渠道。<br><br>
+        <strong>分析框架</strong>：竹石三角色分析（提问者→回答专家→总结者）+ 五维评分体系（基本面25+技术面20+市场前景20+板块热度15+稀缺性20=100分）<br><br>
+        <strong>报告生成时间</strong>：2026年7月9日 | 数据基准日：2026年3月23日 | 复盘版
+    </div>
+
+</div>
+
+<script>
+function showSection(id) {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    // Remove active from all tabs
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    // Show selected section
+    document.getElementById(id).classList.add('active');
+    // Activate tab
+    event.target.classList.add('active');
+}
+
+// Collapsible sections
+document.querySelectorAll('.collapsible-header').forEach(header => {
+    header.addEventListener('click', function() {
+        this.classList.toggle('open');
+        this.nextElementSibling.classList.toggle('open');
+    });
+});
+</script>
+
+</body>
+</html>
