@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆13股一季报披露行情全景复盘</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-card-inner: #0f172a;
+            --bg-hover: #334155;
+            --border: #334155;
+            --border-light: #475569;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-green: #10b981;
+            --accent-green-bright: #34d399;
+            --accent-red: #ef4444;
+            --accent-red-bright: #f87171;
+            --accent-gold: #f59e0b;
+            --accent-gold-bright: #fbbf24;
+            --accent-cyan: #06b6d4;
+            --accent-cyan-bright: #22d3ee;
+            --accent-purple: #8b5cf6;
+            --accent-purple-bright: #a78bfa;
+            --accent-blue: #3b82f6;
+            --accent-blue-bright: #60a5fa;
+            --gradient-gcp: linear-gradient(135deg, #10b981, #06b6d4, #8b5cf6);
+            --gradient-header: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* ====== Sidebar Navigation ====== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            z-index: 100;
+            padding: 24px 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .sidebar-logo h2 {
+            font-size: 1em;
+            background: var(--gradient-gcp);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sidebar-logo p {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .sidebar-nav {
+            list-style: none;
+        }
+        .sidebar-nav li {
+            margin-bottom: 2px;
+        }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88em;
+            transition: all 0.25s;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover {
+            color: var(--text-primary);
+            background: rgba(16, 185, 129, 0.06);
+            border-left-color: var(--accent-green);
+        }
+        .sidebar-nav a.active {
+            color: var(--accent-cyan-bright);
+            background: rgba(6, 182, 212, 0.08);
+            border-left-color: var(--accent-cyan);
+        }
+        .sidebar-nav a .nav-icon {
+            font-size: 1.1em;
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar-nav .nav-sub {
+            padding-left: 36px;
+        }
+        .sidebar-nav .nav-sub a {
+            font-size: 0.8em;
+            padding: 7px 20px;
+        }
+
+        /* Mobile sidebar toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1.3em;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* ====== Main Content ====== */
+        .main-content {
+            margin-left: 220px;
+            padding: 32px;
+            min-height: 100vh;
+        }
+
+        /* ====== Header ====== */
+        .header {
+            background: var(--gradient-header);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 40px;
+            margin-bottom: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(16,185,129,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.06) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(16,185,129,0.03), transparent, rgba(6,182,212,0.03), transparent);
+            animation: headerRotate 20s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes headerRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .header h1 {
+            font-size: 2.4em;
+            background: var(--gradient-gcp);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            letter-spacing: 1px;
+        }
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            position: relative;
+        }
+        .header .meta {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .header .meta span {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.25);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            color: var(--accent-green-bright);
+        }
+
+        /* ====== Stats Bar ====== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, #8b5cf6, #f59e0b); }
+        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.8em;
+            margin-bottom: 6px;
+        }
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 800;
+        }
+        .stat-sub {
+            color: var(--text-muted);
+            font-size: 0.75em;
+            margin-top: 4px;
+        }
+
+        /* ====== Section ====== */
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+        }
+        .section-icon-green { background: rgba(16,185,129,0.12); }
+        .section-icon-cyan { background: rgba(6,182,212,0.12); }
+        .section-icon-purple { background: rgba(139,92,246,0.12); }
+        .section-icon-gold { background: rgba(245,158,11,0.12); }
+        .section-icon-red { background: rgba(239,68,68,0.12); }
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        /* ====== Cards ====== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .card:hover {
+            border-color: var(--border-light);
+        }
+        .card-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ====== Rank Table ====== */
+        .rank-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 0.9em;
+        }
+        .rank-table thead th {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+        .rank-table tbody td {
+            padding: 13px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(51,65,85,0.5);
+            font-size: 0.92em;
+        }
+        .rank-table tbody tr { transition: background 0.2s; }
+        .rank-table tbody tr:hover { background: var(--bg-hover); }
+        .rank-table tbody tr:last-child td { border-bottom: none; }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #d97706); color: #000; box-shadow: 0 0 12px rgba(251,191,36,0.3); }
+        .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0612a); color: #fff; }
+        .rank-other { background: var(--bg-hover); color: var(--text-secondary); }
+
+        .stock-name {
+            font-weight: 600;
+            color: var(--accent-cyan-bright);
+        }
+        .stock-tag {
+            color: var(--accent-purple-bright);
+            font-size: 0.78em;
+            background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.25);
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* Color tiers for cumulative change */
+        .change-deep-green { color: #10b981; font-weight: 700; }
+        .change-light-green { color: #34d399; font-weight: 600; }
+        .change-gray { color: #94a3b8; }
+        .change-red { color: #ef4444; font-weight: 700; }
+
+        /* Limit-up highlight */
+        .limit-up {
+            background: rgba(245,158,11,0.12);
+            color: var(--accent-gold);
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(245,158,11,0.3);
+        }
+
+        .feature-strong {
+            color: var(--accent-green-bright);
+            font-weight: 600;
+        }
+        .feature-weak {
+            color: var(--accent-red-bright);
+            font-weight: 600;
+        }
+        .feature-neutral {
+            color: var(--text-secondary);
+        }
+
+        /* ====== Group Cards ====== */
+        .group-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .group-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .group-card:nth-child(1)::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+        .group-card:nth-child(2)::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+        .group-card:nth-child(3)::before { background: linear-gradient(90deg, #8b5cf6, #f59e0b); }
+        .group-card:nth-child(4)::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+        .group-card:nth-child(5)::before { background: linear-gradient(90deg, #ef4444, #10b981); }
+        .group-card-title {
+            font-size: 1.15em;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .group-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        .group-table th {
+            background: var(--bg-card-inner);
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82em;
+        }
+        .group-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(51,65,85,0.4);
+            font-size: 0.9em;
+        }
+        .group-table tr:hover { background: rgba(51,65,85,0.3); }
+        .group-table .event-col {
+            color: var(--text-secondary);
+            font-size: 0.82em;
+            text-align: left;
+            max-width: 300px;
+        }
+
+        /* ====== Stock Detail Cards ====== */
+        .stock-detail-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .stock-detail-card:hover {
+            border-color: var(--border-light);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .stock-detail-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: relative;
+        }
+        .stock-detail-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .stock-detail-card.positive .stock-detail-header::before {
+            background: linear-gradient(90deg, #10b981, #06b6d4);
+        }
+        .stock-detail-card.negative .stock-detail-header::before {
+            background: linear-gradient(90deg, #ef4444, #f59e0b);
+        }
+        .stock-detail-name {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        .stock-detail-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .stock-detail-stats {
+            text-align: right;
+        }
+        .stock-detail-change {
+            font-size: 1.8em;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        .stock-detail-label {
+            font-size: 0.75em;
+            color: var(--text-muted);
+        }
+        .stock-detail-body {
+            padding: 20px 24px;
+        }
+        .daily-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        .daily-table th {
+            background: var(--bg-card-inner);
+            padding: 9px 12px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82em;
+        }
+        .daily-table td {
+            padding: 9px 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(51,65,85,0.4);
+        }
+        .daily-table tr:hover { background: rgba(51,65,85,0.3); }
+        .daily-table .limit-up-row {
+            background: rgba(245,158,11,0.06);
+        }
+        .daily-table .limit-up-row:hover {
+            background: rgba(245,158,11,0.12);
+        }
+        .stock-note {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(6,182,212,0.06);
+            border: 1px solid rgba(6,182,212,0.15);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            line-height: 1.7;
+        }
+        .stock-note::before {
+            content: '💡 ';
+        }
+
+        /* ====== Findings ====== */
+        .finding-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .finding-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+        .finding-card:nth-child(1)::before { background: linear-gradient(180deg, #10b981, #06b6d4); }
+        .finding-card:nth-child(2)::before { background: linear-gradient(180deg, #06b6d4, #8b5cf6); }
+        .finding-card:nth-child(3)::before { background: linear-gradient(180deg, #8b5cf6, #ef4444); }
+        .finding-card:nth-child(4)::before { background: linear-gradient(180deg, #f59e0b, #10b981); }
+        .finding-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .finding-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88em;
+            margin-bottom: 14px;
+        }
+        .finding-table th {
+            background: var(--bg-card-inner);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82em;
+        }
+        .finding-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(51,65,85,0.4);
+        }
+        .finding-table tr:hover { background: rgba(51,65,85,0.3); }
+        .finding-note {
+            padding: 12px 16px;
+            background: rgba(139,92,246,0.06);
+            border-left: 3px solid var(--accent-purple);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-secondary);
+            font-size: 0.88em;
+            line-height: 1.7;
+            margin-top: 12px;
+        }
+
+        /* Finding 4 special stats */
+        .stat-pills {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        .stat-pill {
+            background: rgba(16,185,129,0.08);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+        }
+        .stat-pill-label {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .stat-pill-value {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--accent-green-bright);
+        }
+
+        /* ====== Insight Section ====== */
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .insight-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        .insight-table th {
+            background: var(--bg-card-inner);
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82em;
+        }
+        .insight-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(51,65,85,0.4);
+        }
+        .insight-table tr:hover { background: rgba(51,65,85,0.3); }
+
+        /* ====== Disclaimer ====== */
+        .disclaimer {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.82em;
+            line-height: 1.9;
+        }
+        .disclaimer strong { color: var(--accent-gold); }
+
+        /* ====== Tag Styles ====== */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.78em;
+            font-weight: 600;
+            margin-right: 4px;
+            margin-bottom: 2px;
+        }
+        .tag-green { background: rgba(16,185,129,0.12); color: var(--accent-green-bright); border: 1px solid rgba(16,185,129,0.25); }
+        .tag-red { background: rgba(239,68,68,0.12); color: var(--accent-red-bright); border: 1px solid rgba(239,68,68,0.25); }
+        .tag-cyan { background: rgba(6,182,212,0.12); color: var(--accent-cyan-bright); border: 1px solid rgba(6,182,212,0.25); }
+        .tag-gold { background: rgba(245,158,11,0.12); color: var(--accent-gold-bright); border: 1px solid rgba(245,158,11,0.25); }
+        .tag-purple { background: rgba(139,92,246,0.12); color: var(--accent-purple-bright); border: 1px solid rgba(139,92,246,0.25); }
+        .tag-blue { background: rgba(59,130,246,0.12); color: var(--accent-blue-bright); border: 1px solid rgba(59,130,246,0.25); }
+
+        /* ====== Animations ====== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 0 rgba(16,185,129,0); }
+            50% { box-shadow: 0 0 20px rgba(16,185,129,0.15); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* ====== Scroll to Top ====== */
+        .scroll-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--accent-cyan);
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .scroll-top:hover { background: var(--bg-hover); }
+        .scroll-top.visible { opacity: 1; }
+
+        /* ====== Responsive ====== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+            }
+            .sidebar-toggle {
+                display: flex;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 24px 16px;
+                padding-top: 72px;
+            }
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .group-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 640px) {
+            .main-content {
+                padding: 16px 12px;
+                padding-top: 72px;
+            }
+            .header {
+                padding: 28px 20px;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .stats-bar {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .stat-value {
+                font-size: 1.4em;
+            }
+            .rank-table, .daily-table, .finding-table, .group-table, .insight-table {
+                font-size: 0.78em;
+            }
+            .rank-table thead th, .daily-table th {
+                padding: 10px 6px;
+                font-size: 0.75em;
+            }
+            .rank-table tbody td, .daily-table td {
+                padding: 10px 6px;
+            }
+            .stock-detail-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stock-detail-stats {
+                text-align: left;
+            }
+            .finding-card {
+                padding: 20px;
+            }
+        }
+
+        /* ====== Print ====== */
+        @media print {
+            body { background: #fff; color: #333; }
+            .sidebar, .sidebar-toggle, .scroll-top { display: none !important; }
+            .main-content { margin-left: 0; }
+            .header { border: 1px solid #ddd; }
+            .card, .stock-detail-card, .finding-card, .group-card {
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <h2>🏆 一季报行情复盘</h2>
+        <p>13股全景分析</p>
+    </div>
+    <ul class="sidebar-nav">
+        <li><a href="#overview" class="active" onclick="navClick(this)"><span class="nav-icon">📊</span>总览排名</a></li>
+        <li><a href="#groups" onclick="navClick(this)"><span class="nav-icon">📅</span>披露时间分组</a></li>
+        <li><a href="#daily" onclick="navClick(this)"><span class="nav-icon">📈</span>逐日行情明细</a></li>
+        <li style="margin-top:4px"><a href="#stock-1" class="nav-sub" onclick="navClick(this)">宏和科技</a></li>
+        <li><a href="#stock-2" class="nav-sub" onclick="navClick(this)">东山精密</a></li>
+        <li><a href="#stock-3" class="nav-sub" onclick="navClick(this)">有研新材</a></li>
+        <li><a href="#stock-4" class="nav-sub" onclick="navClick(this)">利通电子</a></li>
+        <li><a href="#stock-5" class="nav-sub" onclick="navClick(this)">云南锗业</a></li>
+        <li><a href="#stock-6" class="nav-sub" onclick="navClick(this)">北方华创</a></li>
+        <li><a href="#stock-7" class="nav-sub" onclick="navClick(this)">兆易创新</a></li>
+        <li><a href="#stock-8" class="nav-sub" onclick="navClick(this)">中国巨石</a></li>
+        <li><a href="#stock-9" class="nav-sub" onclick="navClick(this)">中科曙光</a></li>
+        <li><a href="#stock-10" class="nav-sub" onclick="navClick(this)">雅克科技</a></li>
+        <li><a href="#stock-11" class="nav-sub" onclick="navClick(this)">长电科技</a></li>
+        <li><a href="#stock-12" class="nav-sub" onclick="navClick(this)">德明利</a></li>
+        <li><a href="#stock-13" class="nav-sub" onclick="navClick(this)">黄河旋风</a></li>
+        <li style="margin-top:8px"><a href="#findings" onclick="navClick(this)"><span class="nav-icon">🔥</span>核心发现</a></li>
+        <li><a href="#insights" onclick="navClick(this)"><span class="nav-icon">🎯</span>持仓启示</a></li>
+    </ul>
+</nav>
+
+<!-- Mobile Toggle -->
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- Main Content -->
+<div class="main-content">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🏆13股一季报披露行情全景复盘</h1>
+        <div class="subtitle">Q1业绩披露前7日窗口期涨跌幅全景分析</div>
+        <div class="meta">
+            <span>📅 数据基准日：2026年7月9日</span>
+            <span>📊 数据来源：腾讯自选股/上交所/深交所/东方财富/巨潮资讯</span>
+            <span>🔬 交叉验证</span>
+        </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-label">13股平均涨幅</div>
+            <div class="stat-value" style="color:var(--accent-green-bright)">+11.30%</div>
+            <div class="stat-sub">7日窗口累计</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">中位数涨幅</div>
+            <div class="stat-value" style="color:var(--accent-cyan-bright)">+6.33%</div>
+            <div class="stat-sub">兆易创新</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">上涨占比</div>
+            <div class="stat-value" style="color:var(--accent-purple-bright)">92.3%</div>
+            <div class="stat-sub">12/13 上涨</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">涨停出现率</div>
+            <div class="stat-value" style="color:var(--accent-gold)">46.2%</div>
+            <div class="stat-sub">6/13 至少一次涨停</div>
+        </div>
+    </div>
+
+    <!-- ====== Section 1: Overview Ranking ====== -->
+    <div class="section" id="overview">
+        <div class="section-header">
+            <div class="section-icon section-icon-green">📊</div>
+            <div>
+                <div class="section-title">一、披露日期与7日累计涨跌幅总览</div>
+                <div class="section-desc">按7日累计涨跌幅排名，13股中12股上涨、仅黄河旋风下跌</div>
+            </div>
+        </div>
+        <div class="card">
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>股票</th>
+                        <th>代码</th>
+                        <th>标签</th>
+                        <th>Q1披露日</th>
+                        <th>7日窗口期</th>
+                        <th>累计涨跌幅</th>
+                        <th>区间特征</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="rank-badge rank-1">1</span></td>
+                        <td><span class="stock-name">宏和科技</span></td>
+                        <td>603256</td>
+                        <td><span class="stock-tag">电子布龙头</span></td>
+                        <td>04-16</td>
+                        <td>04/07-04/15</td>
+                        <td class="change-deep-green">+50.15%</td>
+                        <td><span class="feature-strong">🔥强势暴涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-2">2</span></td>
+                        <td><span class="stock-name">东山精密</span></td>
+                        <td>002384</td>
+                        <td><span class="stock-tag">PCB+光模块双龙头</span></td>
+                        <td>04-28</td>
+                        <td>04/17-04/27</td>
+                        <td class="change-deep-green">+24.84%</td>
+                        <td><span class="feature-strong">🔥强势拉升</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-3">3</span></td>
+                        <td><span class="stock-name">有研新材</span></td>
+                        <td>600206</td>
+                        <td><span class="stock-tag">稀有金属平台</span></td>
+                        <td>04-25(六)</td>
+                        <td>04/16-04/24</td>
+                        <td class="change-deep-green">+20.77%</td>
+                        <td><span class="feature-strong">🔥强势拉升</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">4</span></td>
+                        <td><span class="stock-name">利通电子</span></td>
+                        <td>603629</td>
+                        <td><span class="stock-tag">散热模组新星</span></td>
+                        <td>04-28</td>
+                        <td>04/17-04/27</td>
+                        <td class="change-light-green">+13.20%</td>
+                        <td><span class="feature-strong">强势上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">5</span></td>
+                        <td><span class="stock-name">云南锗业</span></td>
+                        <td>002428</td>
+                        <td><span class="stock-tag">锗资源龙头</span></td>
+                        <td>04-29</td>
+                        <td>04/20-04/28</td>
+                        <td class="change-light-green">+12.39%</td>
+                        <td><span class="feature-strong">强势上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">6</span></td>
+                        <td><span class="stock-name">北方华创</span></td>
+                        <td>002371</td>
+                        <td><span class="stock-tag">半导体设备龙头</span></td>
+                        <td>04-30</td>
+                        <td>04/21-04/29</td>
+                        <td class="change-light-green">+8.39%</td>
+                        <td><span class="feature-neutral">温和上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">7</span></td>
+                        <td><span class="stock-name">兆易创新</span></td>
+                        <td>603986</td>
+                        <td><span class="stock-tag">存储+MCU双龙头</span></td>
+                        <td>04-30</td>
+                        <td>04/21-04/29</td>
+                        <td class="change-light-green">+6.33%</td>
+                        <td><span class="feature-neutral">温和上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">8</span></td>
+                        <td><span class="stock-name">中国巨石</span></td>
+                        <td>600176</td>
+                        <td><span class="stock-tag">玻纤全球龙头</span></td>
+                        <td>04-25(六)</td>
+                        <td>04/16-04/24</td>
+                        <td class="change-light-green">+6.15%</td>
+                        <td><span class="feature-neutral">温和上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">9</span></td>
+                        <td><span class="stock-name">中科曙光</span></td>
+                        <td>603019</td>
+                        <td><span class="stock-tag">算力国家队</span></td>
+                        <td>04-25(六)</td>
+                        <td>04/16-04/24</td>
+                        <td class="change-gray">+5.08%</td>
+                        <td><span class="feature-neutral">温和上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">10</span></td>
+                        <td><span class="stock-name">雅克科技</span></td>
+                        <td>002409</td>
+                        <td><span class="stock-tag">电子特气龙头</span></td>
+                        <td>04-28</td>
+                        <td>04/17-04/27</td>
+                        <td class="change-gray">+3.50%</td>
+                        <td><span class="feature-neutral">微幅上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">11</span></td>
+                        <td><span class="stock-name">长电科技</span></td>
+                        <td>600584</td>
+                        <td><span class="stock-tag">封测龙头</span></td>
+                        <td>04-29</td>
+                        <td>04/20-04/28</td>
+                        <td class="change-gray">+2.55%</td>
+                        <td><span class="feature-neutral">微幅上涨</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">12</span></td>
+                        <td><span class="stock-name">德明利</span></td>
+                        <td>001309</td>
+                        <td><span class="stock-tag">存储模组新锐</span></td>
+                        <td>04-30</td>
+                        <td>04/21-04/29</td>
+                        <td class="change-gray">+1.54%</td>
+                        <td><span class="feature-neutral">横盘震荡</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-other">13</span></td>
+                        <td><span class="stock-name">黄河旋风</span></td>
+                        <td>600172</td>
+                        <td><span class="stock-tag">超硬材料老兵</span></td>
+                        <td>04-29</td>
+                        <td>04/20-04/28</td>
+                        <td class="change-red">-8.89%</td>
+                        <td><span class="feature-weak">弱势下跌</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ====== Section 2: Group by Disclosure Date ====== -->
+    <div class="section" id="groups">
+        <div class="section-header">
+            <div class="section-icon section-icon-cyan">📅</div>
+            <div>
+                <div class="section-title">二、按披露时间分组</div>
+                <div class="section-desc">5个披露日，观察不同时间窗口的行情特征</div>
+            </div>
+        </div>
+
+        <div class="group-grid">
+            <!-- 4/16 -->
+            <div class="group-card">
+                <div class="group-card-title">📅 4月16日披露（1股）</div>
+                <table class="group-table">
+                    <thead><tr><th>股票</th><th>7日累计涨跌幅</th><th>关键事件</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="stock-name">宏和科技</span></td>
+                            <td class="change-deep-green">+50.15%</td>
+                            <td class="event-col">电子布景气爆棚+Q1归母净利同比+354%，4/13涨停+10.01%，4/14续涨+9.75%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4/25 -->
+            <div class="group-card">
+                <div class="group-card-title">📅 4月25日披露（周六，3股）</div>
+                <table class="group-table">
+                    <thead><tr><th>股票</th><th>7日累计涨跌幅</th><th>关键事件</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="stock-name">有研新材</span></td>
+                            <td class="change-deep-green">+20.77%</td>
+                            <td class="event-col">4/20涨停+10.05%，4/22续涨+7.75%，稀有金属概念全面爆发</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">中国巨石</span></td>
+                            <td class="change-light-green">+6.15%</td>
+                            <td class="event-col">4/16大涨+6.15%起步，后续震荡，Q1业绩稳健</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">中科曙光</span></td>
+                            <td class="change-gray">+5.08%</td>
+                            <td class="event-col">算力板块稳步上行，4/22+2.74%，整体温和</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4/28 -->
+            <div class="group-card">
+                <div class="group-card-title">📅 4月28日披露（3股）</div>
+                <table class="group-table">
+                    <thead><tr><th>股票</th><th>7日累计涨跌幅</th><th>关键事件</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="stock-name">东山精密</span></td>
+                            <td class="change-deep-green">+24.84%</td>
+                            <td class="event-col">4/22涨停+10.00%，PCB+光模块双轮驱动，5/7天上涨</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">利通电子</span></td>
+                            <td class="change-light-green">+13.20%</td>
+                            <td class="event-col">4/17涨停+10.01%，散热模组+算力概念，波动剧烈</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">雅克科技</span></td>
+                            <td class="change-gray">+3.50%</td>
+                            <td class="event-col">电子特气板块平稳，7日内波动较小</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4/29 -->
+            <div class="group-card">
+                <div class="group-card-title">📅 4月29日披露（4股）</div>
+                <table class="group-table">
+                    <thead><tr><th>股票</th><th>7日累计涨跌幅</th><th>关键事件</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="stock-name">云南锗业</span></td>
+                            <td class="change-light-green">+12.39%</td>
+                            <td class="event-col">4/20涨停+10.00%，4/22再涨停+10.00%，锗资源概念火爆</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">北方华创</span></td>
+                            <td class="change-light-green">+8.39%</td>
+                            <td class="event-col">4/27大涨+9.23%，半导体设备龙头资金集中涌入</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">长电科技</span></td>
+                            <td class="change-gray">+2.55%</td>
+                            <td class="event-col">封测板块整体平稳，波动不大</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">黄河旋风</span></td>
+                            <td class="change-red">-8.89%</td>
+                            <td class="event-col">唯一负收益，4/28大跌-4.20%，市场情绪偏弱</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4/30 -->
+            <div class="group-card" style="grid-column: 1 / -1; max-width: 600px;">
+                <div class="group-card-title">📅 4月30日披露（3股）</div>
+                <table class="group-table">
+                    <thead><tr><th>股票</th><th>7日累计涨跌幅</th><th>关键事件</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="stock-name">兆易创新</span></td>
+                            <td class="change-light-green">+6.33%</td>
+                            <td class="event-col">4/21+5.43%起步，后续窄幅震荡，存储景气延续</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">德明利</span></td>
+                            <td class="change-gray">+1.54%</td>
+                            <td class="event-col">4/23大跌-5.77%后回升，存储模组波动较大</td>
+                        </tr>
+                        <tr>
+                            <td><span class="stock-name">北方华创</span></td>
+                            <td class="change-light-green">+8.39%</td>
+                            <td class="event-col">已在4/29组统计</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== Section 3: Daily Details ====== -->
+    <div class="section" id="daily">
+        <div class="section-header">
+            <div class="section-icon section-icon-purple">📈</div>
+            <div>
+                <div class="section-title">三、逐日行情明细</div>
+                <div class="section-desc">13只股票各7个交易日的收盘价、涨跌幅和成交额</div>
+            </div>
+        </div>
+
+        <!-- 1. 宏和科技 -->
+        <div class="stock-detail-card positive" id="stock-1">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">1️⃣ 宏和科技（603256）<span class="stock-tag">电子布龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-gold">🏆 7日涨幅第1</span>
+                        <span class="tag tag-green">Q1归母+354%</span>
+                        <span class="tag tag-cyan">4/16披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green-bright)">+50.15%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/07</td><td>68.93</td><td style="color:var(--accent-green)">+1.47%</td><td>12.17</td></tr>
+                        <tr><td>04/08</td><td>74.10</td><td style="color:var(--accent-green)">+7.50%</td><td>19.72</td></tr>
+                        <tr><td>04/09</td><td>76.13</td><td style="color:var(--accent-green)">+2.74%</td><td>17.41</td></tr>
+                        <tr><td>04/10</td><td>81.11</td><td style="color:var(--accent-green)">+6.54%</td><td>27.25</td></tr>
+                        <tr class="limit-up-row"><td>04/13</td><td>89.23</td><td><span class="limit-up">+10.01% 🔒</span></td><td>15.83</td></tr>
+                        <tr><td>04/14</td><td>97.93</td><td style="color:var(--accent-green)">+9.75%</td><td>34.44</td></tr>
+                        <tr><td>04/15</td><td>102.00</td><td style="color:var(--accent-green)">+4.16%</td><td>50.51</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">Q1归母净利同比+354.22%，7日暴涨50%，市场提前强烈预期</div>
+            </div>
+        </div>
+
+        <!-- 2. 东山精密 -->
+        <div class="stock-detail-card positive" id="stock-2">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">2️⃣ 东山精密（002384）<span class="stock-tag">PCB+光模块双龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-gold">🥈 7日涨幅第2</span>
+                        <span class="tag tag-green">PCB+光模块双轮</span>
+                        <span class="tag tag-cyan">4/28披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green-bright)">+24.84%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/17</td><td>162.10</td><td style="color:var(--accent-green)">+8.39%</td><td>189.95</td></tr>
+                        <tr><td>04/20</td><td>157.00</td><td style="color:var(--accent-red)">-3.15%</td><td>173.97</td></tr>
+                        <tr><td>04/21</td><td>169.40</td><td style="color:var(--accent-green)">+7.90%</td><td>158.35</td></tr>
+                        <tr class="limit-up-row"><td>04/22</td><td>186.34</td><td><span class="limit-up">+10.00% 🔒</span></td><td>150.39</td></tr>
+                        <tr><td>04/23</td><td>186.66</td><td style="color:var(--accent-green)">+0.17%</td><td>213.86</td></tr>
+                        <tr><td>04/24</td><td>187.90</td><td style="color:var(--accent-green)">+0.66%</td><td>221.25</td></tr>
+                        <tr><td>04/27</td><td>186.70</td><td style="color:var(--accent-red)">-0.64%</td><td>168.59</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">涨停板后高位震荡，5/7天上涨，日均成交额182亿</div>
+            </div>
+        </div>
+
+        <!-- 3. 有研新材 -->
+        <div class="stock-detail-card positive" id="stock-3">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">3️⃣ 有研新材（600206）<span class="stock-tag">稀有金属平台</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-gold">🥉 7日涨幅第3</span>
+                        <span class="tag tag-green">稀有金属爆发</span>
+                        <span class="tag tag-cyan">4/25(六)披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green-bright)">+20.77%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/16</td><td>22.23</td><td style="color:var(--accent-green)">+1.23%</td><td>6.66</td></tr>
+                        <tr><td>04/17</td><td>23.19</td><td style="color:var(--accent-green)">+4.32%</td><td>13.51</td></tr>
+                        <tr class="limit-up-row"><td>04/20</td><td>25.52</td><td><span class="limit-up">+10.05% 🔒</span></td><td>26.87</td></tr>
+                        <tr><td>04/21</td><td>24.78</td><td style="color:var(--accent-red)">-2.90%</td><td>21.26</td></tr>
+                        <tr><td>04/22</td><td>26.70</td><td style="color:var(--accent-green)">+7.75%</td><td>29.33</td></tr>
+                        <tr><td>04/23</td><td>25.85</td><td style="color:var(--accent-red)">-3.18%</td><td>24.58</td></tr>
+                        <tr><td>04/24</td><td>26.52</td><td style="color:var(--accent-green)">+2.59%</td><td>26.34</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">涨停+大阳线交替，稀有金属概念全面爆发</div>
+            </div>
+        </div>
+
+        <!-- 4. 利通电子 -->
+        <div class="stock-detail-card positive" id="stock-4">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">4️⃣ 利通电子（603629）<span class="stock-tag">散热模组新星</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-purple">波动剧烈</span>
+                        <span class="tag tag-green">涨停开局</span>
+                        <span class="tag tag-cyan">4/28披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+13.20%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr class="limit-up-row"><td>04/17</td><td>105.44</td><td><span class="limit-up">+10.01% 🔒</span></td><td>37.47</td></tr>
+                        <tr><td>04/20</td><td>107.28</td><td style="color:var(--accent-green)">+1.75%</td><td>58.29</td></tr>
+                        <tr><td>04/21</td><td>101.19</td><td style="color:var(--accent-red)">-5.68%</td><td>37.54</td></tr>
+                        <tr><td>04/22</td><td>108.20</td><td style="color:var(--accent-green)">+6.93%</td><td>51.79</td></tr>
+                        <tr><td>04/23</td><td>116.48</td><td style="color:var(--accent-green)">+7.65%</td><td>50.80</td></tr>
+                        <tr><td>04/24</td><td>109.42</td><td style="color:var(--accent-red)">-6.06%</td><td>47.96</td></tr>
+                        <tr><td>04/27</td><td>108.50</td><td style="color:var(--accent-red)">-0.84%</td><td>38.89</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">波动极大，涨停后大幅震荡，3月涨+118%翻倍后仍受追捧</div>
+            </div>
+        </div>
+
+        <!-- 5. 云南锗业 -->
+        <div class="stock-detail-card positive" id="stock-5">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">5️⃣ 云南锗业（002428）<span class="stock-tag">锗资源龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-gold">双涨停</span>
+                        <span class="tag tag-red">披露后回落</span>
+                        <span class="tag tag-cyan">4/29披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+12.39%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr class="limit-up-row"><td>04/20</td><td>68.19</td><td><span class="limit-up">+10.00% 🔒</span></td><td>77.75</td></tr>
+                        <tr><td>04/21</td><td>68.39</td><td style="color:var(--accent-green)">+0.29%</td><td>80.82</td></tr>
+                        <tr class="limit-up-row"><td>04/22</td><td>75.23</td><td><span class="limit-up">+10.00% 🔒</span></td><td>52.58</td></tr>
+                        <tr><td>04/23</td><td>76.87</td><td style="color:var(--accent-green)">+2.18%</td><td>130.01</td></tr>
+                        <tr><td>04/24</td><td>77.11</td><td style="color:var(--accent-green)">+0.31%</td><td>106.47</td></tr>
+                        <tr><td>04/27</td><td>72.79</td><td style="color:var(--accent-red)">-5.60%</td><td>86.71</td></tr>
+                        <tr><td>04/28</td><td>69.67</td><td style="color:var(--accent-red)">-4.29%</td><td>62.08</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">双涨停后高位回落，Q1归母净利同比-10.71%，存在预期差</div>
+            </div>
+        </div>
+
+        <!-- 6. 北方华创 -->
+        <div class="stock-detail-card positive" id="stock-6">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">6️⃣ 北方华创（002371）<span class="stock-tag">半导体设备龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-green">设备龙头</span>
+                        <span class="tag tag-gold">4/27暴涨9.23%</span>
+                        <span class="tag tag-cyan">4/30披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+8.39%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/21</td><td>449.60</td><td style="color:var(--accent-red)">-4.44%</td><td>72.31</td></tr>
+                        <tr><td>04/22</td><td>477.19</td><td style="color:var(--accent-green)">+6.14%</td><td>81.94</td></tr>
+                        <tr><td>04/23</td><td>474.24</td><td style="color:var(--accent-red)">-0.62%</td><td>46.47</td></tr>
+                        <tr><td>04/24</td><td>471.94</td><td style="color:var(--accent-red)">-0.48%</td><td>61.64</td></tr>
+                        <tr><td>04/27</td><td>515.49</td><td style="color:var(--accent-green);font-weight:700">+9.23%</td><td>102.78</td></tr>
+                        <tr><td>04/28</td><td>516.45</td><td style="color:var(--accent-green)">+0.19%</td><td>72.08</td></tr>
+                        <tr><td>04/29</td><td>509.95</td><td style="color:var(--accent-red)">-1.26%</td><td>47.38</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">4/27单日暴涨9.23%贡献大部分涨幅，设备龙头资金集中涌入</div>
+            </div>
+        </div>
+
+        <!-- 7. 兆易创新 -->
+        <div class="stock-detail-card positive" id="stock-7">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">7️⃣ 兆易创新（603986）<span class="stock-tag">存储+MCU双龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-green">存储景气</span>
+                        <span class="tag tag-purple">窄幅震荡</span>
+                        <span class="tag tag-cyan">4/30披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+6.33%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/21</td><td>305.52</td><td style="color:var(--accent-green)">+5.43%</td><td>128.27</td></tr>
+                        <tr><td>04/22</td><td>313.23</td><td style="color:var(--accent-green)">+2.52%</td><td>105.60</td></tr>
+                        <tr><td>04/23</td><td>304.05</td><td style="color:var(--accent-red)">-2.93%</td><td>137.10</td></tr>
+                        <tr><td>04/24</td><td>296.95</td><td style="color:var(--accent-red)">-2.34%</td><td>104.36</td></tr>
+                        <tr><td>04/27</td><td>302.67</td><td style="color:var(--accent-green)">+1.93%</td><td>95.94</td></tr>
+                        <tr><td>04/28</td><td>306.75</td><td style="color:var(--accent-green)">+1.35%</td><td>114.22</td></tr>
+                        <tr><td>04/29</td><td>308.14</td><td style="color:var(--accent-green)">+0.45%</td><td>127.88</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">首日大涨后震荡，存储景气延续但市场预期已充分</div>
+            </div>
+        </div>
+
+        <!-- 8. 中国巨石 -->
+        <div class="stock-detail-card positive" id="stock-8">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">8️⃣ 中国巨石（600176）<span class="stock-tag">玻纤全球龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-green">业绩稳健</span>
+                        <span class="tag tag-blue">PE仅28.5x</span>
+                        <span class="tag tag-cyan">4/25(六)披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+6.15%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/16</td><td>32.81</td><td style="color:var(--accent-green)">+6.15%</td><td>56.14</td></tr>
+                        <tr><td>04/17</td><td>33.31</td><td style="color:var(--accent-green)">+1.52%</td><td>51.76</td></tr>
+                        <tr><td>04/20</td><td>31.52</td><td style="color:var(--accent-red)">-5.37%</td><td>55.37</td></tr>
+                        <tr><td>04/21</td><td>31.56</td><td style="color:var(--accent-green)">+0.13%</td><td>31.81</td></tr>
+                        <tr><td>04/22</td><td>32.06</td><td style="color:var(--accent-green)">+1.58%</td><td>43.04</td></tr>
+                        <tr><td>04/23</td><td>33.33</td><td style="color:var(--accent-green)">+3.96%</td><td>53.67</td></tr>
+                        <tr><td>04/24</td><td>32.81</td><td style="color:var(--accent-red)">-1.56%</td><td>41.95</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">首日大涨后回调再反弹，Q1业绩稳健，PE仅28.5x为13股最低</div>
+            </div>
+        </div>
+
+        <!-- 9. 中科曙光 -->
+        <div class="stock-detail-card positive" id="stock-9">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">9️⃣ 中科曙光（603019）<span class="stock-tag">算力国家队</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-green">稳步上行</span>
+                        <span class="tag tag-blue">波动较小</span>
+                        <span class="tag tag-cyan">4/25(六)披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+5.08%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/16</td><td>88.61</td><td style="color:var(--accent-green)">+0.80%</td><td>32.87</td></tr>
+                        <tr><td>04/17</td><td>89.54</td><td style="color:var(--accent-green)">+1.05%</td><td>52.39</td></tr>
+                        <tr><td>04/20</td><td>91.59</td><td style="color:var(--accent-green)">+2.29%</td><td>62.37</td></tr>
+                        <tr><td>04/21</td><td>89.02</td><td style="color:var(--accent-red)">-2.81%</td><td>38.47</td></tr>
+                        <tr><td>04/22</td><td>91.46</td><td style="color:var(--accent-green)">+2.74%</td><td>45.13</td></tr>
+                        <tr><td>04/23</td><td>91.30</td><td style="color:var(--accent-red)">-0.17%</td><td>56.97</td></tr>
+                        <tr><td>04/24</td><td>92.38</td><td style="color:var(--accent-green)">+1.18%</td><td>76.58</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">算力板块稳步上行，波动较小，国家队属性稳健</div>
+            </div>
+        </div>
+
+        <!-- 10. 雅克科技 -->
+        <div class="stock-detail-card positive" id="stock-10">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">🔟 雅克科技（002409）<span class="stock-tag">电子特气龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-purple">板块平稳</span>
+                        <span class="tag tag-blue">关注度低</span>
+                        <span class="tag tag-cyan">4/28披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+3.50%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/17</td><td>85.59</td><td style="color:var(--accent-red)">-0.26%</td><td>7.78</td></tr>
+                        <tr><td>04/20</td><td>86.15</td><td style="color:var(--accent-green)">+0.65%</td><td>8.86</td></tr>
+                        <tr><td>04/21</td><td>87.28</td><td style="color:var(--accent-green)">+1.31%</td><td>9.13</td></tr>
+                        <tr><td>04/22</td><td>90.17</td><td style="color:var(--accent-green)">+3.31%</td><td>11.91</td></tr>
+                        <tr><td>04/23</td><td>88.82</td><td style="color:var(--accent-red)">-1.50%</td><td>12.22</td></tr>
+                        <tr><td>04/24</td><td>88.79</td><td style="color:var(--accent-red)">-0.03%</td><td>9.02</td></tr>
+                        <tr><td>04/27</td><td>88.81</td><td style="color:var(--accent-green)">+0.02%</td><td>13.53</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">电子特气板块平稳，7日内成交额均<14亿，关注度较低</div>
+            </div>
+        </div>
+
+        <!-- 11. 长电科技 -->
+        <div class="stock-detail-card positive" id="stock-11">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">1️⃣1️⃣ 长电科技（600584）<span class="stock-tag">封测龙头</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-purple">整体平稳</span>
+                        <span class="tag tag-blue">波动不大</span>
+                        <span class="tag tag-cyan">4/29披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+2.55%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/20</td><td>44.39</td><td style="color:var(--accent-green)">+1.16%</td><td>27.19</td></tr>
+                        <tr><td>04/21</td><td>43.93</td><td style="color:var(--accent-red)">-1.04%</td><td>20.39</td></tr>
+                        <tr><td>04/22</td><td>45.41</td><td style="color:var(--accent-green)">+3.37%</td><td>34.44</td></tr>
+                        <tr><td>04/23</td><td>44.31</td><td style="color:var(--accent-red)">-2.42%</td><td>29.75</td></tr>
+                        <tr><td>04/24</td><td>44.79</td><td style="color:var(--accent-green)">+1.08%</td><td>31.59</td></tr>
+                        <tr><td>04/27</td><td>46.22</td><td style="color:var(--accent-green)">+3.19%</td><td>47.35</td></tr>
+                        <tr><td>04/28</td><td>45.00</td><td style="color:var(--accent-red)">-2.64%</td><td>36.49</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">封测板块整体平稳，波动不大，市场对封测环节关注度偏低</div>
+            </div>
+        </div>
+
+        <!-- 12. 德明利 -->
+        <div class="stock-detail-card positive" id="stock-12">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">1️⃣2️⃣ 德明利（001309）<span class="stock-tag">存储模组新锐</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-red">4/23暴跌-5.77%</span>
+                        <span class="tag tag-purple">市场分歧</span>
+                        <span class="tag tag-cyan">4/30披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-green)">+1.54%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/21</td><td>514.60</td><td style="color:var(--accent-red)">-0.08%</td><td>57.78</td></tr>
+                        <tr><td>04/22</td><td>525.00</td><td style="color:var(--accent-green)">+2.02%</td><td>73.55</td></tr>
+                        <tr><td>04/23</td><td>494.69</td><td style="color:var(--accent-red);font-weight:700">-5.77%</td><td>107.63</td></tr>
+                        <tr><td>04/24</td><td>489.88</td><td style="color:var(--accent-red)">-0.97%</td><td>65.34</td></tr>
+                        <tr><td>04/27</td><td>488.15</td><td style="color:var(--accent-red)">-0.35%</td><td>55.97</td></tr>
+                        <tr><td>04/28</td><td>496.39</td><td style="color:var(--accent-green)">+1.69%</td><td>66.03</td></tr>
+                        <tr><td>04/29</td><td>522.93</td><td style="color:var(--accent-green);font-weight:700">+5.35%</td><td>88.88</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">4/23暴跌-5.77%后企稳回升，最后一日+5.35%拉升，市场分歧明显</div>
+            </div>
+        </div>
+
+        <!-- 13. 黄河旋风 -->
+        <div class="stock-detail-card negative" id="stock-13">
+            <div class="stock-detail-header">
+                <div>
+                    <div class="stock-detail-name">1️⃣3️⃣ 黄河旋风（600172）<span class="stock-tag">超硬材料老兵</span></div>
+                    <div class="stock-detail-tags">
+                        <span class="tag tag-red">❌ 唯一负收益</span>
+                        <span class="tag tag-red">Q1仍亏损</span>
+                        <span class="tag tag-cyan">4/29披露</span>
+                    </div>
+                </div>
+                <div class="stock-detail-stats">
+                    <div class="stock-detail-change" style="color:var(--accent-red)">-8.89%</div>
+                    <div class="stock-detail-label">7日累计涨跌幅</div>
+                </div>
+            </div>
+            <div class="stock-detail-body">
+                <table class="daily-table">
+                    <thead><tr><th>日期</th><th>收盘价</th><th>涨跌幅</th><th>成交额(亿)</th></tr></thead>
+                    <tbody>
+                        <tr><td>04/20</td><td>8.96</td><td style="color:var(--accent-green)">+2.17%</td><td>14.41</td></tr>
+                        <tr><td>04/21</td><td>8.74</td><td style="color:var(--accent-red)">-2.46%</td><td>9.83</td></tr>
+                        <tr><td>04/22</td><td>8.46</td><td style="color:var(--accent-red)">-3.20%</td><td>12.65</td></tr>
+                        <tr><td>04/23</td><td>8.55</td><td style="color:var(--accent-green)">+1.06%</td><td>12.76</td></tr>
+                        <tr><td>04/24</td><td>8.30</td><td style="color:var(--accent-red)">-2.92%</td><td>8.69</td></tr>
+                        <tr><td>04/27</td><td>8.34</td><td style="color:var(--accent-green)">+0.48%</td><td>5.98</td></tr>
+                        <tr><td>04/28</td><td>7.99</td><td style="color:var(--accent-red);font-weight:700">-4.20%</td><td>6.17</td></tr>
+                    </tbody>
+                </table>
+                <div class="stock-note">唯一负收益，4/28大跌-4.20%，Q1仍亏损（亏损收窄），市场情绪极弱</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== Section 4: Core Findings ====== -->
+    <div class="section" id="findings">
+        <div class="section-header">
+            <div class="section-icon section-icon-gold">🔥</div>
+            <div>
+                <div class="section-title">四、核心发现与规律</div>
+                <div class="section-desc">从13股Q1披露行情中提炼的四大规律</div>
+            </div>
+        </div>
+
+        <!-- Finding 1 -->
+        <div class="finding-card">
+            <div class="finding-title">🔥 发现一：业绩爆发型提前涨幅最猛</div>
+            <table class="finding-table">
+                <thead><tr><th>类型</th><th>代表</th><th>7日涨幅</th><th>Q1业绩</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="tag tag-green">业绩爆发</span></td><td>宏和科技</td><td class="change-deep-green">+50.15%</td><td>归母净利同比+354%</td></tr>
+                    <tr><td><span class="tag tag-cyan">双轮驱动</span></td><td>东山精密</td><td class="change-deep-green">+24.84%</td><td>PCB+光模块</td></tr>
+                    <tr><td><span class="tag tag-purple">概念火爆</span></td><td>有研新材</td><td class="change-deep-green">+20.77%</td><td>稀有金属概念</td></tr>
+                </tbody>
+            </table>
+            <div class="finding-note">当Q1业绩远超预期时，市场在披露前就已大幅抢跑，涨幅可达20-50%</div>
+        </div>
+
+        <!-- Finding 2 -->
+        <div class="finding-card">
+            <div class="finding-title">📊 发现二：涨停板出现在披露前1-8个交易日</div>
+            <table class="finding-table">
+                <thead><tr><th>股票</th><th>涨停日</th><th>距披露日</th></tr></thead>
+                <tbody>
+                    <tr><td>宏和科技</td><td>04/13 (+10.01%)</td><td style="color:var(--accent-cyan)">1个交易日</td></tr>
+                    <tr><td>有研新材</td><td>04/20 (+10.05%)</td><td style="color:var(--accent-cyan)">4个交易日</td></tr>
+                    <tr><td>云南锗业</td><td>04/20 (+10.00%)</td><td style="color:var(--accent-cyan)">7个交易日</td></tr>
+                    <tr><td>云南锗业</td><td>04/22 (+10.00%)</td><td style="color:var(--accent-cyan)">5个交易日</td></tr>
+                    <tr><td>东山精密</td><td>04/22 (+10.00%)</td><td style="color:var(--accent-cyan)">4个交易日</td></tr>
+                    <tr><td>利通电子</td><td>04/17 (+10.01%)</td><td style="color:var(--accent-cyan)">7个交易日</td></tr>
+                </tbody>
+            </table>
+            <div class="finding-note">涨停板通常出现在披露前1-7个交易日，越接近披露日涨停，说明信息泄露或预期越强烈</div>
+        </div>
+
+        <!-- Finding 3 -->
+        <div class="finding-card">
+            <div class="finding-title">📉 发现三：业绩不及预期则提前下跌</div>
+            <table class="finding-table">
+                <thead><tr><th>股票</th><th>7日涨幅</th><th>实际业绩</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>黄河旋风</td>
+                        <td class="change-red">-8.89%</td>
+                        <td>Q1仍亏损</td>
+                    </tr>
+                    <tr>
+                        <td>云南锗业</td>
+                        <td class="change-light-green">+12.39%（但披露后2日跌-9.89%）</td>
+                        <td>归母净利同比-10.71%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="finding-note">云南锗业虽然披露前涨12%，但Q1业绩偏弱，披露后两天回吐涨幅，属于典型的"买预期卖事实"</div>
+        </div>
+
+        <!-- Finding 4 -->
+        <div class="finding-card">
+            <div class="finding-title">🎯 发现四：13股中12股披露前上涨，存在显著的"一季报行情"效应</div>
+            <div class="stat-pills">
+                <div class="stat-pill">
+                    <div class="stat-pill-label">平均累计涨幅</div>
+                    <div class="stat-pill-value">+11.30%</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-label">中位数</div>
+                    <div class="stat-pill-value" style="color:var(--accent-cyan-bright)">+6.33%</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-label">上涨占比</div>
+                    <div class="stat-pill-value" style="color:var(--accent-purple-bright)">92.3%</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-label">涨停出现率</div>
+                    <div class="stat-pill-value" style="color:var(--accent-gold)">46.2%</div>
+                </div>
+            </div>
+            <div class="finding-note">在科技景气周期中，一季报行情效应显著，市场倾向于提前博弈业绩超预期</div>
+        </div>
+    </div>
+
+    <!-- ====== Section 5: Insights ====== -->
+    <div class="section" id="insights">
+        <div class="section-header">
+            <div class="section-icon section-icon-red">🎯</div>
+            <div>
+                <div class="section-title">五、对当前持仓的启示</div>
+                <div class="section-desc">基于Q1披露行情规律，对当前持仓的思考</div>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <table class="insight-table">
+                <thead><tr><th>当前持仓</th><th>Q1披露前表现</th><th>启示</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><span class="stock-name">盈峰环境</span></td>
+                        <td class="feature-neutral">未纳入本次分析</td>
+                        <td>关注Q2/半年报披露节奏，提前布局窗口期</td>
+                    </tr>
+                    <tr>
+                        <td><span class="stock-name">云南锗业</span></td>
+                        <td class="feature-strong">披露前+12.39%，但披露后回落</td>
+                        <td><span class="tag tag-red">⚠️ 注意"买预期卖事实"风险</span> 披露前涨幅大但业绩偏弱时，需警惕披露后回吐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="finding-note" style="margin-top:16px;">
+            <strong>核心启示：</strong>Q1行情规律表明，业绩超预期型标的在披露前涨幅最大（宏和科技+50%），但业绩不及预期时下跌同样迅猛（黄河旋风-8.89%）。对于Q2/半年报，应重点关注业绩预期差，提前布局业绩确定性高的标的，并在披露后及时验证。
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <strong>⚠️ 免责声明</strong><br>
+        本报告基于2026年7月9日截止的公开数据整理分析，数据来源包括腾讯自选股、上交所、深交所、东方财富、巨潮资讯等公开渠道，不保证完整性和准确性。所有分析结论仅供研究参考，不构成任何投资建议或收益承诺。股市有风险，投资需谨慎。历史表现不代表未来走势，如果后续出现核心催化证伪、板块退潮、技术破位、资金流出或公司风险公告，原分析结论需要重新评估。<br><br>
+        <strong>数据来源</strong>：腾讯自选股、上交所、深交所、东方财富、巨潮资讯交叉验证<br><br>
+        <strong>报告生成时间</strong>：2026年7月9日 | AI生成内容仅供参考，不构成投资建议
+    </div>
+
+</div><!-- end main-content -->
+
+<script>
+// Sidebar navigation click
+function navClick(el) {
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+    // Close mobile sidebar
+    if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.remove('open');
+    }
+}
+
+// Mobile sidebar toggle
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Scroll spy for sidebar
+function updateActiveNav() {
+    const sections = ['overview', 'groups', 'daily', 'stock-1', 'stock-2', 'stock-3', 'stock-4', 'stock-5', 'stock-6', 'stock-7', 'stock-8', 'stock-9', 'stock-10', 'stock-11', 'stock-12', 'stock-13', 'findings', 'insights'];
+    const scrollPos = window.scrollY + 120;
+
+    let currentSection = 'overview';
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollPos) {
+            currentSection = id;
+        }
+    });
+
+    document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + currentSection) {
+            a.classList.add('active');
+        }
+    });
+}
+
+// Scroll to top button
+function updateScrollTop() {
+    const btn = document.getElementById('scrollTop');
+    if (window.scrollY > 400) {
+        btn.classList.add('visible');
+    } else {
+        btn.classList.remove('visible');
+    }
+}
+
+// Close sidebar on outside click (mobile)
+document.addEventListener('click', function(e) {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
+        if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    }
+});
+
+window.addEventListener('scroll', function() {
+    updateActiveNav();
+    updateScrollTop();
+}, { passive: true });
+
+// Initial call
+updateActiveNav();
+updateScrollTop();
+</script>
+
+</body>
+</html>
