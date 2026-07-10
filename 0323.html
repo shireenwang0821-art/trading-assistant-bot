@@ -513,6 +513,50 @@
             transition: width 0.8s ease;
         }
 
+    
+        /* Report Navigation */
+        .report-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .report-nav .nav-label {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        .report-nav a {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.88em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .report-nav a.active {
+            background: linear-gradient(135deg, rgba(240,180,41,0.15), rgba(88,166,255,0.15));
+            border-color: rgba(240,180,41,0.4);
+            color: var(--accent-gold);
+        }
+        .report-nav a:not(.active) {
+            color: var(--text-secondary);
+            border-color: var(--border);
+        }
+        .report-nav a:not(.active):hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: rgba(88,166,255,0.3);
+        }
+
     </style>
 </head>
 <body>
@@ -531,6 +575,15 @@
         </div>
     </div>
     
+    
+    <!-- Report Navigation -->
+    <div class="report-nav">
+        <span class="nav-label">📂 报告导航</span>
+        <a href="index.html">🏆 谁是牛中牛争霸赛</a>
+        <a href="0323.html" class="active">📅 3月23日复盘版</a>
+        <a href="q1-report.html">📊 一季报披露行情复盘</a>
+    </div>
+
     <!-- Navigation -->
     <div class="nav-tabs">
         <div class="nav-tab active" onclick="showSection('overview')">🏆 评分总览</div>
