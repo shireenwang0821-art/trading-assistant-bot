@@ -1,0 +1,70 @@
+{
+  "update_time": "2026-07-16 23:00",
+  "account_summary": {
+    "total_assets": 456811.14,
+    "securities_value": 443226.00,
+    "available_cash": 13585.14,
+    "position_pnl": -36728.09,
+    "daily_pnl": -14938.28,
+    "position_ratio": 0.97
+  },
+  "positions": [
+    {
+      "name": "云南锗业",
+      "code": "002428",
+      "shares": 1900,
+      "cost": 104.996,
+      "price": 87.830,
+      "market_value": 166877.00,
+      "daily_pnl": -10690.24,
+      "daily_pnl_pct": -0.05453,
+      "position_pnl": -32615.54,
+      "position_pnl_pct": -0.16349,
+      "weight": 0.376
+    },
+    {
+      "name": "三六零",
+      "code": "601360",
+      "shares": 5500,
+      "cost": 8.964,
+      "price": 9.000,
+      "market_value": 49500.00,
+      "daily_pnl": 702.49,
+      "daily_pnl_pct": 0.01317,
+      "position_pnl": 197.68,
+      "position_pnl_pct": 0.00402,
+      "weight": 0.112
+    },
+    {
+      "name": "中国巨石",
+      "code": "600176",
+      "shares": 2800,
+      "cost": 53.750,
+      "price": 53.000,
+      "market_value": 148400.00,
+      "daily_pnl": -2739.53,
+      "daily_pnl_pct": -0.01405,
+      "position_pnl": -2099.23,
+      "position_pnl_pct": -0.01395,
+      "weight": 0.335
+    },
+    {
+      "name": "博杰股份",
+      "code": "002975",
+      "shares": 700,
+      "cost": 115.229,
+      "price": 112.070,
+      "market_value": 78449.00,
+      "daily_pnl": -2211.00,
+      "daily_pnl_pct": -0.02741,
+      "position_pnl": -2211.00,
+      "position_pnl_pct": -0.02742,
+      "weight": 0.177
+    }
+  ],
+  "cleared_positions": [
+    {"name": "盈峰环境", "code": "000967", "clear_date": "2026-07-16前", "loss": -61520},
+    {"name": "卧龙电驱", "code": "600580", "clear_date": "2026-07-09"},
+    {"name": "利通电子", "code": "603629", "clear_date": "2026-07-07", "loss": -44534}
+  ]
+}
